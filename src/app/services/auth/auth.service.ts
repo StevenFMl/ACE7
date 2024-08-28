@@ -3,13 +3,14 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@capacitor/storage';
 import { NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  server: string = "http://localhost:8101/WsMunicipioIonic/ws_gad.php";
+  server: string = "http://localhost/ACE/WsMunicipioIonic/ws_gad.php";
   private toastQueue: Array<{ message: string, duration: number, position: 'top' | 'bottom', color: string }> = [];
   private isToastActive: boolean = false;
 
@@ -47,8 +48,24 @@ export class AuthService {
     return this.http.post("http://localhost/ACE/WsMunicipioIonic/ws_img.php", formData);
   }
 
+  async creatSession(id: string, valor: string) {
+    await Storage.set({
+      key: id,
+      value: valor
+    });
+  }
 
+  async closeSession() {
+    await Storage.clear();
+    this.navCtrl.navigateRoot(['/login']);
+  }
 
+  async getSession(id: string) {
+    const item = await Storage.get({
+      key: id,
+    });
+    return item.value;
+  }
 
   // Sign in
   async login(email: string, password: string) {
