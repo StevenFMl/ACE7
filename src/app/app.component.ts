@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
@@ -38,10 +36,7 @@ export class AppComponent {
       // ...
 
       // Fake timeout since we do not load any data
-      setTimeout(async () => {
-        // Hide SplashScreen
-        await SplashScreen.hide();
-      }, 2000);
+     
     });
   }
 }

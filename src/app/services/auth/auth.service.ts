@@ -10,7 +10,7 @@ import { NavController } from '@ionic/angular';
   providedIn: 'root'
 })
 export class AuthService {
-  server: string = "http://localhost/ACE/WsMunicipioIonic/ws_gad.php";
+  server: string = "http://localhost:8101/WsMunicipioIonic/ws_gad.php";
   private toastQueue: Array<{ message: string, duration: number, position: 'top' | 'bottom', color: string }> = [];
   private isToastActive: boolean = false;
 
