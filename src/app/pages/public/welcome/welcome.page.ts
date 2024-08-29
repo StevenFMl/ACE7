@@ -1,6 +1,7 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { SwiperComponent } from 'swiper/angular';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+import { LoginPage } from '../login/login.page';
 SwiperCore.use([Pagination]);
 
 import { Router } from '@angular/router';
@@ -8,11 +9,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.page.html',
-  styleUrls: ['./welcome.page.scss'],
+  styleUrls: ['./welcome.page.scss'],  // Incluye el archivo de estilos aquí
   encapsulation: ViewEncapsulation.None,
 })
 export class WelcomePage implements AfterContentChecked {
-
+  title = 'ACE';
   language: string = '';
   last_slide: boolean = false;
 
@@ -32,7 +33,6 @@ export class WelcomePage implements AfterContentChecked {
   ) { }
 
   ngAfterContentChecked(): void {
-
     if (this.swiper) {
       this.swiper.updateSwiper({});
     }
@@ -55,9 +55,8 @@ export class WelcomePage implements AfterContentChecked {
 
   // Go to main content
   async getStarted() {
-
     // Navigate to /home
-    this.router.navigateByUrl('/signin');
+    
+    this.router.navigateByUrl('/login');
   }
-
 }

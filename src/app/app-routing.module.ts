@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-// import { AuthGuard } from './guards/auth.guard';
-// import { PublicGuard } from './guards/public.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,13 +15,17 @@ const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadChildren: () => import('./pages/public/welcome/welcome.module').then(m => m.WelcomePageModule),
-    // canActivate: [PublicGuard] // Prevent for signed in users
+    loadChildren: () =>
+      import('./pages/public/welcome/welcome.module').then(
+        (m) => m.WelcomePageModule
+      ),
   },
   {
-    path: 'signin',
-    loadChildren: () => import('./pages/public/signin/signin.module').then(m => m.SigninPageModule),
-    // canActivate: [PublicGuard] // Prevent for signed in users
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/public/login/login.module').then(
+        (m) => m.LoginPageModule
+      ),
   },
   {
     path: 'signup',
