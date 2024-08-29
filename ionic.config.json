@@ -1,5 +1,7 @@
 {
-  "name": "ACE7",
-  "integrations": {},
+  "name": "Ionic Start Theme",
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-import { ReloadGuard } from '../reload.guard'; // Importa tu guard
 
 const routes: Routes = [
   {
@@ -10,25 +9,31 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren: () =>
-          import('../pages/secure/home/home.module').then(
-            (m) => m.HomePageModule
-          ),
-        canActivate: [ReloadGuard], // Aplica el guard aquí
+        loadChildren: () => import('../pages/secure/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: '',
         redirectTo: 'home',
-        pathMatch: 'full',
+        pathMatch: 'full'
       },
-      
-      
-    ],
-  },
+      {
+        path: 'charts',
+        loadChildren: () => import('../pages/secure/charts/charts.module').then(m => m.ChartsPageModule)
+      },
+      {
+        path: 'payments',
+        loadChildren: () => import('../pages/secure/payments/payments.module').then(m => m.PaymentsPageModule)
+      },
+      {
+        path: 'styleguide',
+        loadChildren: () => import('../pages/secure/styleguide/styleguide.module').then(m => m.StyleguidePageModule)
+      },
+    ]
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }
