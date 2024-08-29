@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';  
 import { NavController } from '@ionic/angular';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  server: string = "http://localhost/WsMunicipioIonic/ws_gad.php";
+  server: string = "https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php";
   private toastQueue: Array<{ message: string, duration: number, position: 'top' | 'bottom', color: string }> = [];
   private isToastActive: boolean = false;
 
@@ -29,11 +30,17 @@ export class AuthService {
   }
 
   postData(body: any) {
+
     let head = new HttpHeaders({ 'Content-Type': 'application/json, charset:utf-8' });
     let options = {
       headers: head
     };
-    return this.http.post(this.server, JSON.stringify(body), options);
+    return this.http.post(this.server, JSON.stringify(body), options).pipe(
+      catchError((error: any) => {
+        alert(JSON.stringify(error))
+        return throwError(() => new Error('Error del servidor. Por favor, intenta nuevamente más tarde.'));
+      })
+    );
   }
 
   // Verificar stock
@@ -50,7 +57,7 @@ export class AuthService {
   }
 
   public uploadIMG(formData: FormData) {
-    return this.http.post("http://localhost/WsMunicipioIonic/ws_img.php", formData);
+    return this.http.post("http://192.168.192.1/WsMunicipioIonic/ws_img.php", formData);
   }
 
   async creatSession(id: string, valor: string) {

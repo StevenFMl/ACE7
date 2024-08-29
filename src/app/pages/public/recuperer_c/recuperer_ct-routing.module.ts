@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PasswordResetPage } from './password-reset.page';
+import { PasswordResetPage } from './recuperer_c.page';
 
 const routes: Routes = [
   {

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PasswordResetPage } from './password-reset.page';
+import { PasswordResetPage } from './recuperer_c.page';
 
 describe('PasswordResetPage', () => {
   let component: PasswordResetPage;

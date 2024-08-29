@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PasswordResetPageRoutingModule } from './password-reset-routing.module';
+import { PasswordResetPageRoutingModule } from './recuperer_ct-routing.module';
 
-import { PasswordResetPage } from './password-reset.page';
+import { PasswordResetPage } from './recuperer_c.page';
 
 @NgModule({
   imports: [
