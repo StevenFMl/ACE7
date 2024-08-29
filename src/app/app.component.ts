@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
+import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar, Style } from '@capacitor/status-bar';
 import { Capacitor } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,6 @@ export class AppComponent {
     private platform: Platform
   ) {
     this.initializeApp();
-    defineCustomElements(window);
-
   }
 
   // Initialize app
@@ -36,7 +35,10 @@ export class AppComponent {
       // ...
 
       // Fake timeout since we do not load any data
-     
+      setTimeout(async () => {
+        // Hide SplashScreen
+        await SplashScreen.hide();
+      }, 2000);
     });
   }
 }
