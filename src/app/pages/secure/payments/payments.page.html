@@ -1,139 +1,60 @@
 <ion-header collapse="fade" [translucent]="true">
   <ion-toolbar color="dark">
-    <ion-title color="light">
-      Payments
-    </ion-title>
+    <ion-title color="light">Inventario</ion-title>
     <ion-buttons slot="primary">
-      <ion-button color="secondary" (click)="filter()">
-        <ion-icon slot="icon-only" name="filter"></ion-icon>
-      </ion-button>
+      <!--<ion-button color="light" routerLink="/ajustes">
+        <ion-icon slot="icon-only" name="cog"></ion-icon>
+      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar class="toolbar-search">
-      <ion-searchbar color="dark" showCancelButton="focus" placeholder="Company, category, expense ..."></ion-searchbar>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-searchbar class="searchbar-spacing" color="medium" [(ngModel)]="searchTerm" (ionInput)="filterProductos($event)"
+    placeholder="Buscar producto"></ion-searchbar>
 
-  <div class="ion-padding">
-    <!-- Skeletons -->
-    <ng-container *ngIf="!content_loaded">
+  <ion-button color="tertiary" routerLink="/registroinventario" class="floating-button button-spacing">
+    <ion-icon color="dark" name="duplicate-outline" class="icon-space"></ion-icon>
+    <strong>Registrar Inventario</strong>
+  </ion-button>
 
-      <ion-list-header class="ion-list-header-small">
-        <ion-label><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></ion-label>
-        <ion-note color="tertiary" class="ion-note-small">
-          <ion-skeleton-text animated style="width: 40px"></ion-skeleton-text>
-        </ion-note>
-      </ion-list-header>
+  <ion-grid class="transparent-grid custom-table">
+    <ion-row class="header-row">
+      <ion-col class="header col-nombre" color="light">Producto</ion-col>
+      <ion-col class="header col-cantidad_inicial" color="light">Cantidad</ion-col>
+      <ion-col class="header col-acc" color="light">
+        <ion-icon name="settings-outline"></ion-icon>Opcion
+      </ion-col>
+    </ion-row>
 
-      <ion-list class="list-custom animate__animated animate__fadeIn" lines="full">
-        <ion-item color="primary" button detail="false" *ngFor="let i of [].constructor(12);">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </ion-avatar>
-          <ion-label>
-            <h3><ion-skeleton-text animated style="width: 50%"></ion-skeleton-text></h3>
-            <p><ion-skeleton-text animated style="width: 75%"></ion-skeleton-text></p>
-          </ion-label>
-          <ion-skeleton-text slot="end" animated style="width: 15%"></ion-skeleton-text>
-        </ion-item>
-      </ion-list>
+    <!-- getPaginatedProductos() trae el array de Productos implementando el paginador -->
+    <ion-row *ngFor="let producto of getPaginatedProductos(); let i = index" class="data-row"
+      [ngClass]="{'even-row': i % 2 == 0, 'odd-row': i % 2 != 0}">
+      <ion-col class="data col-nombre">{{ producto.nombre }}</ion-col>
+      <ion-col class="data col-cantidad_inicial">{{ producto.cantidad_inicial }}</ion-col>
+      <ion-col class="data col-acc actions">
+        <div class="action-buttons">
+          <ion-button size="small" fill="clear" color="tertiary" (click)="editarProducto(producto.codigo)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small" fill="clear" color="danger" (click)="eliminarProducto(producto.codigo)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    </ng-container>
-
-    <ng-container *ngIf="content_loaded">
-
-      <ion-list-header class="ion-list-header-small">
-        <ion-label color="tertiary">February, 2023</ion-label>
-      </ion-list-header>
-
-      <ion-list class="list-custom animate__animated animate__fadeIn" lines="full" *ngIf="content_loaded">
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="cafe-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Coffee</h3>
-            <p>Lorem Ipsum &middot; 09.04.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="cash-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Salary</h3>
-            <p>Lorem Ipsum Inc. &middot; 06.03.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="home-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Rent</h3>
-            <p>Lorem Inc. &middot; 03.02.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-      </ion-list>
-
-      <hr class="hr-medium">
-
-      <ion-list-header class="ion-list-header-small">
-        <ion-label color="tertiary">January, 2023</ion-label>
-      </ion-list-header>
-
-      <ion-list class="list-custom animate__animated animate__fadeIn" lines="full" *ngIf="content_loaded">
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="cafe-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Coffee</h3>
-            <p>Lorem Ipsum &middot; 09.04.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="cash-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Salary</h3>
-            <p>Lorem Ipsum Inc. &middot; 06.03.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-
-        <ion-item color="primary" button routerLink="detail" detail="false">
-          <ion-avatar slot="start" class="ion-avatar-default-icon">
-            <ion-icon color="tertiary" size="large" name="home-outline"></ion-icon>
-          </ion-avatar>
-
-          <ion-label>
-            <h3>Rent</h3>
-            <p>Lorem Inc. &middot; 03.02.2023</p>
-          </ion-label>
-          <ion-badge color="dark" slot="end">Detail</ion-badge>
-        </ion-item>
-      </ion-list>
-
-    </ng-container>
-
-  </div>
+  <ion-row class="pagination-row">
+    <ion-col class="pagination-controls">
+      <ion-button (click)="previousPage()" [disabled]="page === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ page }} de {{ totalPages }}</span>
+      <ion-button (click)="nextPage()" [disabled]="page === totalPages">
+        Siguiente
+      </ion-button>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

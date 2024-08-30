@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   public uploadIMG(formData: FormData) {
-    return this.http.post("http://192.168.192.1/WsMunicipioIonic/ws_img.php", formData);
+    return this.http.post("https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_img.php", formData);
   }
 
   async creatSession(id: string, valor: string) {

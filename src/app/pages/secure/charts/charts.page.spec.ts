@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ChartsPage } from './charts.page';
 
-describe('ChartsPage', () => {
+describe('Page', () => {
   let component: ChartsPage;
   let fixture: ComponentFixture<ChartsPage>;
 

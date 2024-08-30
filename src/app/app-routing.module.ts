@@ -5,13 +5,14 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'welcome', // TODO: Set this to ''
-    pathMatch: 'full'
+    redirectTo: 'welcome',
+    pathMatch: 'full',
   },
   {
     path: '',
-    loadChildren: () => import('./pages/secure/secure.module').then(m => m.SecureModule),
-    // canActivate: [AuthGuard] // Secure all child pages
+    loadChildren: () =>
+      import('./pages/secure/secure.module').then((m) => m.SecureModule),
+    canActivate: [AuthGuard], // Protege esta ruta con el guardia de ruta
   },
   {
     path: 'welcome',
@@ -28,9 +29,11 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./pages/public/signup/signup.module').then(m => m.SignupPageModule),
-    // canActivate: [PublicGuard] // Prevent for signed in users
+    path: 'registro',
+    loadChildren: () =>
+      import('./pages/public/registro/registro.module').then(
+        (m) => m.RegistroPageModule
+      ),
   },
   {
     path: 'recuperer_c',
@@ -39,11 +42,19 @@ const routes: Routes = [
         (m) => m.PasswordResetPageModule
       ),
   },
+  {
+    path: 'password-form',
+    loadChildren: () =>
+      import('./pages/public/password-form/password-form.module').then(
+        (m) => m.PasswordFormPageModule
+      ),
+  },
 ];
+
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
