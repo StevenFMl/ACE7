@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-registroinventario',
@@ -44,7 +45,8 @@ export class RegistroinventarioPage implements OnInit {
     private toastService: ToastService,
     private http: HttpClient,
     public navCtrl: NavController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private storage: Storage 
   ) {
     this.authService.getSession('productos').then((res: any) => {
       this.codigo = res.codigo;
@@ -64,7 +66,7 @@ export class RegistroinventarioPage implements OnInit {
 
   async ionViewWillEnter() {
     try {
-      const res = await this.authService.getSession('codigo');
+      const res = await this.storage.get('codigo')
       this.codigo = res;
       await this.lproductos(this.codigo);
     } catch (error) {
@@ -124,7 +126,7 @@ export class RegistroinventarioPage implements OnInit {
     console.log('Datos a guardar:', datos); // Verifica los datos que se envían
   
     this.http
-      .post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', datos)
+      .post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', datos)
       .subscribe(
         (response) => {
           console.log('Datos guardados correctamente:', response);

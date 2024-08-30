@@ -39,7 +39,7 @@ import { Storage } from '@ionic/storage-angular';
   }
 
   loadProducts() {
-    this.http.post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', {
+    this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
       accion: 'cargar_productos',
       id_persona: this.idPersona
     }).subscribe(
@@ -68,7 +68,7 @@ import { Storage } from '@ionic/storage-angular';
   }
 
   loadInitialQuantity(productId: string) {
-    this.http.post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', {
+    this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
       accion: 'obtener_cantidad_inicial',
       producto_id: productId,
     }).subscribe(
@@ -90,7 +90,7 @@ import { Storage } from '@ionic/storage-angular';
       tipo_precio: this.tipoPrecio, // Guardar el tipo de precio seleccionado
     };
 
-    this.http.post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', datos)
+    this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', datos)
       .subscribe(
         async response => {
           if (response.estado) {

@@ -44,7 +44,7 @@ export class PasswordFormPage implements OnInit {
 
       const data = { accion: 'nueva_contrasena', token: this.token, nueva_contrasena: this.password };
 
-      this.http.post<any>("http://localhost/ACE/WsMunicipioIonic/ws_gad.php", data).subscribe(
+      this.http.post<any>("https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php", data).subscribe(
         async (response) => {
           await loading.dismiss();
           if (response.estado) {

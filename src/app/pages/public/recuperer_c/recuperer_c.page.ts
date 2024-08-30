@@ -43,7 +43,7 @@ export class PasswordResetPage implements OnInit {
       const cedula = this.reset_form.value.cedula;
       const datos = { accion: 'recuperar_contrasena', cedula };
 
-      this.http.post<any>("http://localhost/ACE/WsMunicipioIonic/ws_gad.php", datos).subscribe(
+      this.http.post<any>("https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php", datos).subscribe(
         async (response) => {
           loading.dismiss();
           if (response.estado) {

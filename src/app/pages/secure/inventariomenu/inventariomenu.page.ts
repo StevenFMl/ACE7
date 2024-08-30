@@ -47,7 +47,7 @@ export class InventariomenuPage implements OnInit {
     }
 
     this.http
-      .post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', {
+      .post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
         accion: 'cargar_productos2',
         id_persona: this.idPersona, // Incluye el id_persona aquí
       })
@@ -96,7 +96,7 @@ export class InventariomenuPage implements OnInit {
           text: 'Eliminar',
           handler: () => {
             this.http
-              .post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', {
+              .post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
                 accion: 'eliminar',
                 RI_CODIGO: riCodigo,
               })

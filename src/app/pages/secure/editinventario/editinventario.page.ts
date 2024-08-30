@@ -53,7 +53,7 @@ export class EditinventarioPage implements OnInit {
 
   loadProductData(riCodigo: number, rfCodigo: number | null) {
     this.http
-      .post<any>('http://localhost/ACE/WsMunicipioIonic/ws_gad.php', {
+      .post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
         accion: 'cargar_productos3',
         ri_codigo: riCodigo,
         rf_codigo: rfCodigo,
@@ -152,7 +152,7 @@ export class EditinventarioPage implements OnInit {
 
       this.http
         .post<any>(
-          'http://localhost/ACE/WsMunicipioIonic/ws_gad.php',
+          'https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php',
           updateData
         )
         .subscribe(

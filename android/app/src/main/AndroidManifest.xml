@@ -37,13 +37,6 @@
     </application>
 
     <!-- Permissions -->
-  <uses-permission android:name="android.permission.CAMERA" />
 
-  <!-- Permiso para grabar audio (usar el micrófono) -->
-  <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
-  <!-- Permiso para acceder a la biblioteca de imágenes -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
