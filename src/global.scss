@@ -37,8 +37,11 @@ body {
 }
 
 ion-content {
-  --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+  --background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),url('../src/assets/escudo.png') no-repeat center center;
+  background-color: white;
+
 }
+
 
 ion-list {
   border-radius: 8px;
@@ -55,7 +58,7 @@ ion-label {
 ion-action-sheet {
   &.custom-action-sheet {
     ion-backdrop {
-      background-color: #000;
+      background-color: #000000;
       opacity: 0.6;
     }
 
@@ -117,10 +120,19 @@ ion-searchbar.sc-ion-searchbar-ios-h {
 
 // HR
 hr {
-  background: var(--ion-color-primary);
+  background: var(--ion-color-danger);
   margin: 22px 0;
 
   &.hr-medium {
     margin: 32px 0;
   }
+}
+.avatar-center {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+ion-card-content {
+  text-align: center;
 }

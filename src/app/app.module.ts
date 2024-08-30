@@ -3,9 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage-angular'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 
 // ReactiveForms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +23,9 @@ import { NgChartsModule } from 'ng2-charts';
     IonicModule.forRoot(),
     ReactiveFormsModule,
     AppRoutingModule,
-    NgChartsModule
+    NgChartsModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot() // Configura el módulo aquí
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
