@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReportService } from 'src/app/services/report/report.service';
 import { Chart } from 'chart.js';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-report',
@@ -19,7 +20,13 @@ export class ReportPage {
   isAccordionOpen = true;
   isShowChart = false;
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService,
+    private storage: Storage 
+  ) { 
+    this.init();}
+  private async init() {
+    await this.storage.create();
+  }
 
   previousPage() {
     if (this.currentPage > 1) {
@@ -68,10 +75,10 @@ export class ReportPage {
     }
   }
 
-  generateReport(page?: number) {
+ async generateReport(page?: number) {
     const requestBody = {
       accion: 'report',
-      id_persona: localStorage.getItem('CapacitorStorage.codigo'),
+      id_persona: await this.storage.get('codigo'),
       dateFrom: this.dateFrom,
       dateTo: this.dateTo,
       items_per_page: 10,

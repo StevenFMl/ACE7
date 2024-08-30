@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Chart } from 'chart.js';
 import { ReportService } from 'src/app/services/report/report.service';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-home',
@@ -25,8 +26,13 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private reportService: ReportService,
     private alertController: AlertController,
+    private storage: Storage 
   ) {
     this.getData();
+    this.init();
+  }
+  private async init() {
+    await this.storage.create();
   }
 
   async ionViewWillEnter() {
@@ -89,10 +95,11 @@ export class HomePage implements OnInit {
   }
 
   private async getData() {
-    const userCode = localStorage.getItem('CapacitorStorage.codigo');
+    const codigoUsuario = await this.storage.get('codigo')
+    //const userCode = localStorage.getItem('CapacitorStorage.codigo');
     const datos = {
       accion: 'report',
-      id_persona: userCode,
+      id_persona: codigoUsuario,
       page: 1,
       items_per_page: 1000000000,
       dateFrom: new Date(new Date().getFullYear(), new Date().getMonth(), 1)

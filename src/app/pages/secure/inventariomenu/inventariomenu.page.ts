@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-inventariomenu',
@@ -17,11 +18,17 @@ export class InventariomenuPage implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private alertController: AlertController
-  ) {}
-
-  ngOnInit() {
-    this.idPersona = localStorage.getItem('CapacitorStorage.codigo');
+    private alertController: AlertController,
+    private storage: Storage 
+  ) {
+    this.init();
+  }
+  private async init() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
+     this.idPersona = await this.storage.get('codigo')
+    //this.idPersona = localStorage.getItem('CapacitorStorage.codigo');
     console.log('ID Persona:', this.idPersona);
     this.currentDate = this.getCurrentDate();
     this.loadProducts();

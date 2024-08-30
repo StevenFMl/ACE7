@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-inventario-registro',
@@ -22,11 +23,17 @@ import { ToastController } from '@ionic/angular';
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private storage: Storage 
+  ) {
+    this.init();
+  }
+  private async init() {
+    await this.storage.create();
+  }
 
-  ngOnInit() {
-    this.idPersona = localStorage.getItem('CapacitorStorage.codigo');
+ async ngOnInit() {
+    this.idPersona = await this.storage.get('codigo')
     this.loadProducts();
     this.setCurrentDate();
   }
