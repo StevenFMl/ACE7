@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 
 @Component({
@@ -14,33 +14,42 @@ export class InventariomenuPage implements OnInit {
   productos: any[] = [];
   productInfoVisible: { [key: number]: boolean } = {};
   idPersona: string;
+  selectedDate: string;
+  modalDate: string;
+  isDateModalOpen = false;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private alertController: AlertController,
-    private storage: Storage 
+    private modalController: ModalController,
+    private toastController: ToastController,
+    private storage: Storage
   ) {
     this.init();
   }
+
   private async init() {
     await this.storage.create();
   }
+
   async ngOnInit() {
-     this.idPersona = await this.storage.get('codigo')
-    //this.idPersona = localStorage.getItem('CapacitorStorage.codigo');
-    console.log('ID Persona:', this.idPersona);
-    this.currentDate = this.getCurrentDate();
+    this.idPersona = await this.storage.get('codigo');
+    this.setCurrentDate();
+    this.selectedDate = this.currentDate;
     this.loadProducts();
   }
 
-  getCurrentDate(): string {
-    const now = new Date();
-    return now.toLocaleDateString('es-ES');
+  setCurrentDate() {
+    const today = new Date();
+    const utcDate = new Date(today.getTime() + today.getTimezoneOffset() * 6000); // Obtener la fecha en UTC
+    const offsetEcuador = -5 * 60; // Ecuador UTC-5
+    const localDateEcuador = new Date(utcDate.getTime() + offsetEcuador * 60000);
+    const formattedDate = localDateEcuador.toISOString().split('T')[0];
+    this.currentDate = formattedDate;
   }
 
   loadProducts() {
-    // Verifica que idPersona no sea null o undefined
     if (!this.idPersona) {
       console.error('ID de persona no disponible');
       return;
@@ -49,15 +58,29 @@ export class InventariomenuPage implements OnInit {
     this.http
       .post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
         accion: 'cargar_productos2',
-        id_persona: this.idPersona, // Incluye el id_persona aquí
+        id_persona: this.idPersona,
+        fecha: this.selectedDate,
       })
       .subscribe(
-        (response) => {
+        async (response) => {
           if (response.estado) {
             this.productos = response.datos;
-            this.productos.forEach((producto) => {
-              this.productInfoVisible[producto.id] = false;
-            });
+
+            // Verificar si la lista de productos está vacía
+            if (this.productos.length === 0) {
+              this.productos = []; // Asegurarse de que la lista de productos esté vacía
+              const toast = await this.toastController.create({
+                message: 'No se encontraron productos para la fecha seleccionada.',
+                duration: 2000,  // Duración en milisegundos
+                position: 'top',
+                color: 'danger'
+              });
+              await toast.present();
+            } else {
+              this.productos.forEach((producto, index) => {
+                this.productInfoVisible[index] = false;
+              });
+            }
           } else {
             console.error('Error al cargar productos:', response.mensaje);
           }
@@ -68,16 +91,12 @@ export class InventariomenuPage implements OnInit {
       );
   }
 
-  toggleProductInfo(producto: any) {
-    this.productInfoVisible[producto.id] =
-      !this.productInfoVisible[producto.id];
+  toggleProductInfo(index: number) {
+    this.productInfoVisible[index] = !this.productInfoVisible[index];
   }
 
   editarProducto(riCodigo: string, rfCodigo: string) {
-    this.router.navigate([
-      '/editinventario',
-      { ri_codigo: riCodigo, rf_codigo: rfCodigo },
-    ]);
+    this.router.navigate(['/editinventario', { ri_codigo: riCodigo, rf_codigo: rfCodigo }]);
   }
 
   async eliminarProducto(riCodigo: string) {
@@ -103,13 +122,9 @@ export class InventariomenuPage implements OnInit {
               .subscribe(
                 (response) => {
                   if (response.estado) {
-                    this.loadProducts(); // Recargar los productos después de la eliminación
-                    console.log('Producto eliminado con éxito');
+                    this.loadProducts(); // Recargar productos después de eliminar
                   } else {
-                    console.error(
-                      'Error al eliminar producto:',
-                      response.mensaje
-                    );
+                    console.error('Error al eliminar producto:', response.mensaje);
                   }
                 },
                 (error) => {
@@ -122,5 +137,36 @@ export class InventariomenuPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  openDateModal() {
+    this.modalDate = this.selectedDate;
+    this.isDateModalOpen = true;
+  }
+
+  async saveDate() {
+    this.isDateModalOpen = false;
+    this.selectedDate = this.modalDate;
+    
+    // Vaciar productos antes de cargar nuevos
+    this.productos = [];
+    this.productInfoVisible = {}; // Vaciar la visibilidad de los productos
+
+    this.loadProducts();
+  }
+
+  closeDateModal() {
+    this.isDateModalOpen = false;
+  }
+
+  onDateModalDismiss() {
+    this.closeDateModal();
+  }
+
+  filterProductos(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+    this.productos = this.productos.filter(producto =>
+      producto.nombre.toLowerCase().includes(searchTerm)
+    );
   }
 }
