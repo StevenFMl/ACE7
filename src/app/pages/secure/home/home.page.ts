@@ -50,7 +50,7 @@ export class HomePage implements OnInit {
 
   verificarStock(codigo: string) {
     let datos = {
-      accion: 'lproductos',
+      accion: 'verificarStock',
       cod_persona: this.codigo,
     };
     this.authService.postData(datos).subscribe((res: any) => {

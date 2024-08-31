@@ -46,10 +46,10 @@ export class AuthService {
   // Verificar stock
   checkStockMinimo(productos: any[]): string[] {
     let alertMessages: string[] = [];
-    const umbralCritico = 1000;
+    const umbralCritico = 10;
 
     productos.forEach((producto) => {
-      if (producto.pvp <= umbralCritico) {
+      if (producto.cantidad_inicial <= umbralCritico) {
         alertMessages.push(`¡Atención! El stock del producto ${producto.nombre} es bajo.`);
       }
     });
