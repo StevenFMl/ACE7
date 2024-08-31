@@ -58,9 +58,12 @@
       <ion-label>
         {{ item.RF_CANTIDAD_VENDIDA }}
       </ion-label>
-      <ion-label>
-        {{ item.cuanto_gana }}
-      </ion-label>
+  <ion-label [ngClass]="{
+      'text-success': item.cuanto_gana > 0,
+      'text-danger': item.cuanto_gana < 0
+    }">
+      {{ item.cuanto_gana | number:'1.2-2' }}
+    </ion-label>
     </ion-item>
   </ion-list>
 
