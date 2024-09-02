@@ -15,12 +15,12 @@
       <ion-card-content>
         <ion-item>
           <ion-label>Desde</ion-label>
-          <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="dateFrom"></ion-datetime>
+          <ion-datetime presentation="date" displayFormat="YYYY-MM-DD" [(ngModel)]="dateFrom"></ion-datetime>
         </ion-item>
 
         <ion-item>
           <ion-label>Hasta</ion-label>
-          <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="dateTo"></ion-datetime>
+          <ion-datetime presentation="date" displayFormat="YYYY-MM-DD" [(ngModel)]="dateTo"></ion-datetime>
         </ion-item>
         <ion-button expand="block" color="danger" (click)="generateReport()">Generar Reporte</ion-button>
       </ion-card-content>

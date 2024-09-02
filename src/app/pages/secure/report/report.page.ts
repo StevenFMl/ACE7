@@ -20,10 +20,9 @@ export class ReportPage {
   isAccordionOpen = true;
   isShowChart = false;
 
-  constructor(private reportService: ReportService,
-    private storage: Storage 
-  ) { 
-    this.init();}
+  constructor(private reportService: ReportService, private storage: Storage) {
+    this.init();
+  }
   private async init() {
     await this.storage.create();
   }
@@ -75,11 +74,13 @@ export class ReportPage {
     }
   }
 
- async generateReport(page?: number) {
+  async generateReport(page?: number) {
     const requestBody = {
       accion: 'report',
       id_persona: await this.storage.get('codigo'),
-      dateFrom: this.dateFrom,
+      dateFrom: new Date(this.dateFrom).setDate(
+        new Date(this.dateFrom).getDate() - 1
+      ),
       dateTo: this.dateTo,
       items_per_page: 10,
       page: page || 1,
