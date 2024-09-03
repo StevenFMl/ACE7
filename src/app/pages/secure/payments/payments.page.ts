@@ -118,11 +118,11 @@ export class PaymentsPage implements OnInit {
           text: 'Eliminar',
           handler: async () => {
             let datos = {
-              accion: 'eliminarProductoInventario',
+              accion: 'eliminarProducto', // Asegúrate de que esto coincida con la acción en el PHP
               productoId: productoId,
               cod_persona: this.codigo,
             };
-
+  
             try {
               const res: any = await this.authService
                 .postData(datos)
@@ -138,12 +138,13 @@ export class PaymentsPage implements OnInit {
               this.authService.showToast(
                 'Error al eliminar el producto. Por favor, intenta de nuevo.'
               );
+              console.error('Error en la eliminación del producto:', error);
             }
           },
         },
       ],
     });
-
+  
     await alert.present();
   }
 

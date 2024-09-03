@@ -118,32 +118,31 @@ export class EditproductoPage implements OnInit {
   }
 
   async consultarDato(codigo: string) {
-    let datos = {
-      accion: "consultarDatoProductos",
-      id: codigo
-    };
-
+    let datos = { accion: "consultarDatoProductos", id: codigo };
+  
     this.authService.postData(datos).subscribe((res: any) => {
-      if (res.estado == true) {
-        // Asignar datos generales
-        this.productoId = res.productos[0].id;
-        this.codigo = res.productos[0].codigo;
-        this.txt_producto = res.productos[0].nombre;
-        this.tproducto = res.productos[0].tproducto;
-        this.margenBeneficio = res.productos[0].margenBeneficio;
-        this.utilidadv = res.productos[0].utilidadVenta;
-        this.utilidadc = res.productos[0].utilidadDis;
-        this.impuestos = res.productos[0].impuestos;
-        this.costoProduccion = res.productos[0].costoProduccion;
-        this.costoFabrica = res.productos[0].costoFabrica;
-        this.costoDistribucion = res.productos[0].costoDistribucion;
-        this.pvp = res.productos[0].pvp;
-
+      if (res.estado === true) {
+        // Asegúrate de que los datos estén presentes
+        console.log('Datos recibidos:', res.productos[0]);
+        
+        this.productoId = res.productos[0]?.id ?? null;
+        this.codigo = res.productos[0]?.codigo ?? '';
+        this.txt_producto = res.productos[0]?.nombre ?? '';
+        this.tproducto = res.productos[0]?.tproducto ?? 0;
+        this.margenBeneficio = res.productos[0]?.margenBeneficio ?? 0;
+        this.utilidadv = res.productos[0]?.utilidadVenta ?? 0;
+        this.utilidadc = res.productos[0]?.utilidadDis ?? 0;
+        this.impuestos = res.productos[0]?.impuestos ?? 0;
+        this.costoProduccion = res.productos[0]?.costoProduccion ?? null;
+        this.costoFabrica = res.productos[0]?.costoFabrica ?? null;
+        this.costoDistribucion = res.productos[0]?.costoDistribucion ?? null;
+        this.pvp = res.productos[0]?.pvp ?? null;
+  
         // Filtrar y asignar datos sin duplicados
-        this.materiasPrimas = this.filterUniqueItems(res.productos[0].materiasPrimas, 'nombre');
-        this.manoDeObraList = this.filterUniqueItems(res.productos[0].manoDeObraList, 'nombre');
-        this.costosIndirectosList = this.filterUniqueItems(res.productos[0].costosIndirectosList, 'nombre');
-        this.otrosGastoList = this.filterUniqueItems(res.productos[0].otrosGastoList, 'nombre');
+        this.materiasPrimas = this.filterUniqueItems(res.productos[0]?.materiasPrimas ?? [], 'nombre');
+        this.manoDeObraList = this.filterUniqueItems(res.productos[0]?.manoDeObraList ?? [], 'nombre');
+        this.costosIndirectosList = this.filterUniqueItems(res.productos[0]?.costosIndirectosList ?? [], 'nombre');
+        this.otrosGastoList = this.filterUniqueItems(res.productos[0]?.otrosGastoList ?? [], 'nombre');
       } else {
         this.authService.showToast(res.mensaje);
       }

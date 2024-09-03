@@ -31,7 +31,7 @@ export class AuthService {
 
   postData(body: any) {
 
-    let head = new HttpHeaders({ 'Content-Type': 'application/json, charset:utf-8' });
+    let head = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = {
       headers: head
     };

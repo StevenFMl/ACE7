@@ -121,6 +121,7 @@ export class RegistroinventarioPage implements OnInit {
       perdidas_productos_regalados: this.results.giftedLoss,
       productos_no_vendidos: this.results.remainingProducts,
       fecha_registro: this.initial.fechaRegistro, // Agregar la fecha de registro
+      
     };
   
     console.log('Datos a guardar:', datos); // Verifica los datos que se envían

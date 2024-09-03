@@ -259,12 +259,12 @@ export class ChartsPage implements OnInit {
             }
             break;
   
-          case 'telecomunicaciones':
-            if (costoIndirecto.valorMensual && costoIndirecto.horas) {
-              const costoTelecom = ((costoIndirecto.valorMensual / 720) * costoIndirecto.horas) / this.tproducto;
-              this.costosIndirectosList[i].costo = costoTelecom;
-            }
-            break;
+            case 'telecomunicaciones':
+              if (costoIndirecto.valorMensual && costoIndirecto.horas) {
+                const costoTelecom = ((costoIndirecto.valorMensual / 720) * costoIndirecto.horas) / this.tproducto;
+                this.costosIndirectosList[i].costo = costoTelecom;
+              }
+              break;
   
           default:
             this.costosIndirectosList[i].costo = 0;
@@ -373,7 +373,7 @@ export class ChartsPage implements OnInit {
       this.authService.showToast('Por favor, completa todos los campos antes de guardar.');
       return;
     }
-
+  
     let datos = {
       accion: "guardar_costos_produccion",
       codigo: this.codigo,
@@ -392,7 +392,9 @@ export class ChartsPage implements OnInit {
       costosIndirectosList: this.costosIndirectosList,
       otrosGastoList: this.otrosGastoList
     };
-
+  
+    console.log("Datos a enviar:", datos);  // Agrega esta línea para verificar los datos
+  
     try {
       const res: any = await this.authService.postData(datos).toPromise();
       if (res.estado) {
