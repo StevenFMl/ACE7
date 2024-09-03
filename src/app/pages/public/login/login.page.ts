@@ -75,37 +75,44 @@ export class LoginPage implements OnInit {
     
   }*/
 
-  async login(){
-    let datos={
-      accion:"login",
-      usuario:this.txt_cedula,
-      clave:this.txt_clave
-    }
-    this.authService.postData(datos).subscribe((res:any)=>{
-      if (this.login_form.value.cedula == '' || this.login_form.value.clave == '') {
-        this.toastService.presentToast('Error', 'Ingrese su cédula y contraseña', 'top', 'danger', 2000);
-      }
-    if(res.estado==true)
-    {
-      this.authService.creatSession('codigo', res.persona[0].codigo);
-      this.authService.creatSession('persona', res.persona[0].nombre+" "+res.persona[0].apellido);
-      this.authService.creatSession('nombre', res.persona[0].nombre);
-      this.authService.creatSession('apellido', res.persona[0].apellido);
-      this.authService.creatSession('cedula', res.persona[0].cedula);
-      this.authService.creatSession('correo', res.persona[0].correo);
-      this.authService.creatSession("imgUrl", res.persona[0].img_perfil);
-      this.authService.showToast2('Bienvenido');
-      
-      this.navCtrl.navigateRoot(['/home']);
-      
-    }
+    async login(){
+      this.submit_attempt = true;
+      if (this.login_form.valid) {
+        const datos = {
+          accion: "login",
+          usuario: this.login_form.value.cedula,
+          clave: this.login_form.value.clave
+        };
+        
+        const loading = await this.loadingController.create({
+          message: 'Iniciando sesión...'
+        });
+        await loading.present();
     
-    else
-    {
-      this.authService.showToast(res.mensaje);
-    }
-  
-    });
+        this.authService.postData(datos).subscribe((res: any) => {
+          loading.dismiss();
+          if (res.estado === true) {
+            this.authService.creatSession('codigo', res.persona[0].codigo);
+            this.authService.creatSession('persona', res.persona[0].nombre + " " + res.persona[0].apellido);
+            this.authService.creatSession('nombre', res.persona[0].nombre);
+            this.authService.creatSession('apellido', res.persona[0].apellido);
+            this.authService.creatSession('cedula', res.persona[0].cedula);
+            this.authService.creatSession('correo', res.persona[0].correo);
+            this.authService.creatSession("imgUrl", res.persona[0].img_perfil);
+            this.authService.showToast2('Bienvenido');
+            
+            this.router.navigate(['/home']);  // o this.navCtrl.navigateRoot(['/home'], { replaceUrl: true });
+          } else {
+            this.authService.showToast(res.mensaje);
+          }
+        }, (err) => {
+          loading.dismiss();
+          this.authService.showToast("Error en el servidor");
+        });
+      } else {
+        this.toastService.presentToast('Error', 'Por favor, complete todos los campos.', 'top', 'danger', 2000);
+      }
+
     
     
 
@@ -116,5 +123,11 @@ export class LoginPage implements OnInit {
   setBackgroundImage(imageUrl: string): void {
     this.backgroundImage = `url('${imageUrl}')`;
   }
+  async ionViewWillEnter() {
+    const codigo = await this.authService.getSession('codigo');
+    if (!codigo) {
+        this.navCtrl.navigateRoot(['/login']);  // O '/welcome'
+    }
+}
   
 }

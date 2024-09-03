@@ -26,7 +26,7 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private reportService: ReportService,
     private alertController: AlertController,
-    private storage: Storage 
+    private storage: Storage
   ) {
     this.getData();
     this.init();
