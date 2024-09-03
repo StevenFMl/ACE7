@@ -20,7 +20,6 @@
 
   <ion-grid class="transparent-grid custom-table">
     <ion-row class="header-row">
-      <!-- <ion-col class="header col-num" color="light">N°</ion-col> -->
       <ion-col class="header col-nombre" style="background-color: black; color: white;">Nombre</ion-col>
       <ion-col class="header col-pvp" style="background-color: black; color: white;">PVP</ion-col>
       <ion-col class="header col-acc" style="background-color: black; color: white;">
@@ -31,7 +30,6 @@
     <!-- getPaginatedProductos() trae el array de Productos implementando el paginador -->
     <ion-row *ngFor="let producto of getPaginatedProductos(); let i = index" class="data-row"
       [ngClass]="{'even-row': i % 2 == 0, 'odd-row': i % 2 != 0}">
-      <!-- <ion-col class="data col-num">{{ (page - 1) * pageSize + i + 1 }}</ion-col> -->
       <ion-col class="data col-nombre">{{ producto.nombre }}</ion-col>
       <ion-col class="data col-pvp">{{ producto.pvp }}</ion-col>
       <ion-col class="data col-acc actions">
@@ -48,15 +46,23 @@
   </ion-grid>
 
   <ion-row class="pagination-row">
-    <ion-col class="pagination-controls">
-      <ion-button (click)="previousPage()" [disabled]="page === 1">
-        Anterior
-      </ion-button>
-      <span>Página {{ page }} de {{ totalPages }}</span>
-      <ion-button (click)="nextPage()" [disabled]="page === totalPages">
-        Siguiente
-      </ion-button>
-    </ion-col>
-  </ion-row>
+  <ion-col class="pagination-controls">
+    <ion-button 
+      (click)="previousPage()" 
+      [disabled]="page === 1" 
+      style="background-color: black; color: white; margin: 0 5px;"
+    >
+      Anterior
+    </ion-button>
+    <span> Página {{ page }} de {{ totalPages }} </span>
+    <ion-button 
+      (click)="nextPage()" 
+      [disabled]="page === totalPages" 
+      style="background-color: black; color: white; margin: 0 5px;"
+    >
+      Siguiente
+    </ion-button>
+  </ion-col>
+</ion-row>
 
 </ion-content>

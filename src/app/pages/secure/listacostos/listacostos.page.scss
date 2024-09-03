@@ -93,3 +93,23 @@ ion-searchbar {
 .button-spacing {
   margin-left: 16px; /* Ajusta el valor según tus necesidades */
 }
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.pagination-controls ion-button {
+  --background: #000000 !important; /* Color de fondo negro */
+  --color: #ffffff !important; /* Color de texto blanco */
+  --border-radius: 4px;
+  margin: 0 5px; /* Espacio entre los botones */
+}
+
+
+.pagination-controls ion-button[disabled] {
+  --background: #333333 !important; /* Fondo gris oscuro para botones deshabilitados */
+  --color: #aaaaaa !important; /* Texto gris claro para botones deshabilitados */
+}
