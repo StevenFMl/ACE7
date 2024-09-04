@@ -13,13 +13,13 @@
     </ion-item>
     <ion-card slot="content">
       <ion-card-content>
+        <ion-label>Desde</ion-label>
         <ion-item>
-          <ion-label>Desde</ion-label>
           <ion-datetime presentation="date" displayFormat="YYYY-MM-DD" [(ngModel)]="dateFrom"></ion-datetime>
         </ion-item>
 
+        <ion-label>Hasta</ion-label>
         <ion-item>
-          <ion-label>Hasta</ion-label>
           <ion-datetime presentation="date" displayFormat="YYYY-MM-DD" [(ngModel)]="dateTo"></ion-datetime>
         </ion-item>
         <ion-button expand="block" color="danger" (click)="generateReport()">Generar Reporte</ion-button>
