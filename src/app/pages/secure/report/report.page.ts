@@ -73,15 +73,19 @@ export class ReportPage {
       });
     }
   }
-
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses empiezan en 0
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+  
   async generateReport(page?: number) {
     const requestBody = {
       accion: 'report',
       id_persona: await this.storage.get('codigo'),
-      dateFrom: new Date(this.dateFrom).setDate(
-        new Date(this.dateFrom).getDate() - 1
-      ),
-      dateTo: this.dateTo,
+      dateFrom: this.formatDate(new Date(new Date(this.dateFrom).setDate(new Date(this.dateFrom).getDate() - 1))),
+      dateTo: this.formatDate(new Date(this.dateTo)),
       items_per_page: 10,
       page: page || 1,
     };

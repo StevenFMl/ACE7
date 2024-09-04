@@ -50,6 +50,7 @@
       <ion-label>Nombre Producto</ion-label>
       <ion-label>Cantidad Vendida</ion-label>
       <ion-label>Ganancia</ion-label>
+      <ion-label>Perdida</ion-label>
     </ion-item>
     <ion-item *ngFor="let item of reportData">
       <ion-label>
@@ -63,6 +64,9 @@
       'text-danger': item.cuanto_gana < 0
     }">
       {{ item.cuanto_gana | number:'1.2-2' }}
+    </ion-label>
+    <ion-label>
+      {{ +item.RS_PERDIDA_REGALADOS + +item.RS_PRODUCTOS_NO_VENDIDOS }}
     </ion-label>
     </ion-item>
   </ion-list>
