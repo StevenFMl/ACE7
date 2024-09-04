@@ -307,19 +307,30 @@
           <ion-label>Costo de Producción</ion-label>
           <ion-badge style="color: white;" slot="end">{{ costoProduccion | currency }}</ion-badge>
         </ion-item>
+      
         <ion-item color="medium" *ngIf="costoFabrica !== null">
           <ion-label>Costo de Fábrica</ion-label>
           <ion-badge style="color: white;" slot="end">{{ costoFabrica | currency }}</ion-badge>
         </ion-item>
+      
         <ion-item color="medium" *ngIf="costoDistribucion !== null">
-          <ion-label>Costo de Distribución</ion-label>
-          <ion-badge style="color: white;" slot="end">{{ costoDistribucion | currency }}</ion-badge>
+          <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            Costo de Distribución
+          </ion-label>
+          <ion-input [(ngModel)]="costoDistribucion" type="number" 
+                     placeholder="Ingrese el costo" style="width: 150px; text-align: right;"></ion-input>
         </ion-item>
+        
         <ion-item color="medium" *ngIf="pvp !== null">
-          <ion-label>PVP (recomendado)</ion-label>
-          <ion-badge color="success" slot="end">{{ pvp | currency }}</ion-badge>
+          <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            PVP (recomendado)
+          </ion-label>
+          <ion-input [(ngModel)]="pvp" type="number" 
+                     placeholder="Ingrese el PVP" style="width: 150px; text-align: right;"></ion-input>
         </ion-item>
+        
       </ion-card-content>
+      
     </ion-card>
 
     <ion-button class="button-container" color="danger" expand="small" (click)="guardarCambios()">Guardar</ion-button>
