@@ -38,7 +38,7 @@
         <ion-label position="floating">Fecha (YYYY-MM-DD)</ion-label>
         <ion-input type="text" [value]="date" readonly></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="saveProduct()">Guardar</ion-button>
+      <ion-button expand="full" color="success" (click)="saveProduct()">Guardar</ion-button>
     </ion-card-content>
   </ion-card>
 
@@ -60,7 +60,7 @@
         <ion-label position="floating">Productos desechados</ion-label>
         <ion-input type="number" [(ngModel)]="wasteProducts"></ion-input>
       </ion-item>
-      <ion-button expand="full" (click)="saveFinal()">Guardar</ion-button>
+      <ion-button expand="full" color="success" (click)="saveFinal()">Guardar</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
