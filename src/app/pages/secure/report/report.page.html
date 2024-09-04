@@ -65,7 +65,7 @@
     }">
       {{ item.cuanto_gana | number:'1.2-2' }}
     </ion-label>
-    <ion-label>
+    <ion-label [ngClass]="'text-danger'">
       {{ +item.RS_PERDIDA_REGALADOS + +item.RS_PRODUCTOS_NO_VENDIDOS }}
     </ion-label>
     </ion-item>
