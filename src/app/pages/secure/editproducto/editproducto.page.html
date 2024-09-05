@@ -318,7 +318,8 @@
             Costo de Distribución
           </ion-label>
           <ion-input [(ngModel)]="costoDistribucion" type="number" 
-                     placeholder="Ingrese el costo" style="width: 150px; text-align: right;"></ion-input>
+                     placeholder="Ingrese el costo" 
+                     style="width: 150px; text-align: right; color: green;"></ion-input>
         </ion-item>
         
         <ion-item color="medium" *ngIf="pvp !== null">
@@ -326,8 +327,10 @@
             PVP (recomendado)
           </ion-label>
           <ion-input [(ngModel)]="pvp" type="number" 
-                     placeholder="Ingrese el PVP" style="width: 150px; text-align: right;"></ion-input>
-        </ion-item>
+                     placeholder="Ingrese el PVP" 
+                     style="width: 150px; text-align: right; color: green;"></ion-input>
+          </ion-item>
+          
         
       </ion-card-content>
       
