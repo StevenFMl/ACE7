@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
     this.getData();
     this.init();
   }
+
   private async init() {
     await this.storage.create();
   }
@@ -70,7 +71,7 @@ export class HomePage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Alertas de Stock',
       message: this.stockAlerts.join('<br>'),
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
@@ -95,8 +96,7 @@ export class HomePage implements OnInit {
   }
 
   private async getData() {
-    const codigoUsuario = await this.storage.get('codigo')
-    //const userCode = localStorage.getItem('CapacitorStorage.codigo');
+    const codigoUsuario = await this.storage.get('codigo');
     const datos = {
       accion: 'report',
       id_persona: codigoUsuario,
@@ -107,39 +107,56 @@ export class HomePage implements OnInit {
         .split('T')[0],
       dateTo: new Date().toISOString().split('T')[0],
     };
-
+  
     this.reportService.getDataReport(datos).subscribe((res: any) => {
       if (res.estado) {
-        const products = res?.productos;
-
+        let products = res?.productos;
+  
         if (products && Array.isArray(products)) {
-          this.productos = products
-            .sort((a, b) => b.RF_CANTIDAD_VENDIDA - a.RF_CANTIDAD_VENDIDA)
+          // Agrupar productos por nombre, sumando las cantidades y ganancias
+          const productosAgrupados = products.reduce((acc, producto) => {
+            const nombre = producto.nombre;
+  
+            if (!acc[nombre]) {
+              acc[nombre] = {
+                ...producto,
+                RF_CANTIDAD_VENDIDA: parseFloat(producto.RF_CANTIDAD_VENDIDA),
+                cuanto_gana: parseFloat(producto.cuanto_gana),
+              };
+            } else {
+              acc[nombre].RF_CANTIDAD_VENDIDA += parseFloat(producto.RF_CANTIDAD_VENDIDA);
+              acc[nombre].cuanto_gana += parseFloat(producto.cuanto_gana);
+            }
+  
+            return acc;
+          }, {});
+  
+          // Convertir el objeto a un array
+          this.productos = Object.values(productosAgrupados)
+            .sort((a: any, b: any) => b.RF_CANTIDAD_VENDIDA - a.RF_CANTIDAD_VENDIDA)
             .slice(0, 4);
-
-          const colors = this.generarColoresHexadecimales(
-            (this.productos || []).length
-          );
-
-          this.productos = this.productos.map((d, index) => ({
+  
+          const colors = this.generarColoresHexadecimales(this.productos.length);
+  
+          this.productos = this.productos.map((d: any, index: number) => ({
             name: d.nombre,
-            value: d.RF_CANTIDAD_VENDIDA,
-            ganancias: d.cuanto_gana,
+            value: parseFloat(d.RF_CANTIDAD_VENDIDA).toFixed(2), // Limitar a 2 decimales
+            ganancias: parseFloat(d.cuanto_gana).toFixed(2), // Limitar a 2 decimales
             color: colors[index],
           }));
-
+  
           // Calcular el total de ganancias
-          this.totalGanancias = this.productos.reduce(
-            (total, producto) => total + producto.ganancias,
-            0
+          this.totalGanancias = parseFloat(
+            this.productos.reduce((total, producto) => total + parseFloat(producto.ganancias), 0)
+              .toFixed(2) // Limitar a 2 decimales
           );
-
+  
           // Calcular el total de cantidad vendida
-          this.totalCantidadVendida = this.productos.reduce(
-            (total, producto) => total + producto.value,
-            0
+          this.totalCantidadVendida = parseFloat(
+            this.productos.reduce((total, producto) => total + parseFloat(producto.value), 0)
+              .toFixed(2) // Limitar a 2 decimales
           );
-
+  
           this.generarChart();
           this.generarChartPastel();
         } else {
@@ -150,7 +167,7 @@ export class HomePage implements OnInit {
       }
     });
   }
-
+  
   ngOnInit() {
     // Fake timeout
     setTimeout(() => {
