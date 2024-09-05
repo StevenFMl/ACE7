@@ -125,8 +125,7 @@ export class EditproductoPage implements OnInit {
         // Asegúrate de que los datos estén presentes
         console.log('Datos recibidos:', res.productos[0]);
         
-        this.productoId = res.productos[0]?.id ?? null;
-        this.codigo = res.productos[0]?.codigo ?? '';
+        this.productoId = res.productos[0]?.id ?? '';
         this.txt_producto = res.productos[0]?.nombre ?? '';
         this.tproducto = res.productos[0]?.tproducto ?? 0;
         this.margenBeneficio = res.productos[0]?.margenBeneficio ?? 0;
