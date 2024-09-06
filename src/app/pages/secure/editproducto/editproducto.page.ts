@@ -8,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-editproducto',
@@ -106,14 +107,23 @@ export class EditproductoPage implements OnInit {
     private authService: AuthService,
     private toastService: ToastService,
     private router: Router,
+    private storage: Storage 
   ) {
-    this.authService.getSession('id').then((res: any) => {
-      this.codigo = res;
-      this.consultarDato(this.codigo);
-    });
+    this.init();  
   }
 
-  ngOnInit() {
+  
+  private async init() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
+    this.codigo = await this.storage.get('id'); 
+    if (this.codigo) {
+      this.consultarDato(this.codigo);  
+    } else {
+      console.error('No se pudo obtener el código de persona del almacenamiento.');
+    }
+    
     this.createBarChart();
   }
 
@@ -243,12 +253,12 @@ export class EditproductoPage implements OnInit {
             }
             break;
   
-          case 'telecomunicaciones':
-            if (costoIndirecto.valorMensual && costoIndirecto.horas) {
-              const costoTelecom = ((costoIndirecto.valorMensual / 720) * costoIndirecto.horas) / this.tproducto;
-              this.costosIndirectosList[i].costo = costoTelecom;
-            }
-            break;
+            case 'telecomunicaciones':
+              if (costoIndirecto.valorMensual && costoIndirecto.horas) {
+                const costoTelecom = ((costoIndirecto.valorMensual / 720) * costoIndirecto.horas) / this.tproducto;
+                this.costosIndirectosList[i].costo = costoTelecom;
+              }
+              break;
   
           default:
             this.costosIndirectosList[i].costo = 0;
