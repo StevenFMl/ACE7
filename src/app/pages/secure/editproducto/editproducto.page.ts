@@ -173,8 +173,12 @@ export class EditproductoPage implements OnInit {
     }, 2000);
   }
 
+  shouldShowCantidad(unidad: string): boolean {
+    return unidad !== 'unidad' && unidad !== '';
+  }
+
   agregarMateriaPrima() {
-    this.materiasPrimas.push({ nombre: '', vtotal: 0, costo: 0, unidad: '', cantidad: 0 });
+    this.materiasPrimas.push({ nombre: '', costo: 0, unidad: 'unidad', vtotal: 0 });
   }
 
   quitarMateriaPrima(index: number) {
@@ -205,9 +209,7 @@ export class EditproductoPage implements OnInit {
     this.otrosGastoList.splice(index, 1);
   }
 
-  shouldShowCantidad(unidad: string): boolean {
-    return unidad !== 'unidad' && unidad !== '';
-  }
+
   calcular() {
     this.manoDeObraList.forEach((manoDeObra, index) => {
       const sueldoMensual = manoDeObra.sueldoMensual || 0;
