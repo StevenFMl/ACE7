@@ -5,7 +5,7 @@
 }
 
 .profile-card {
-  border-radius: 0;
+  border-radius: 12px;
   background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
   width: 100%;
   display: flex;
@@ -14,20 +14,43 @@
   align-items: center;
   padding: 30px;
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  ion-avatar {
-    width: 128px;
-    height: 128px;
-    text-align: center;
-    margin-bottom: 30px;
+.profile-card ion-avatar {
+  width: 128px;
+  height: 128px;
+  margin-bottom: 15px; /* Ajustado para un espaciado más estético */
+}
 
-    img {
-      height: 128px;
-      width: 128px;
-      border-radius: 50%;
-      border: 2px solid var(--ion-color-light);
-      display: inline;
-      box-shadow: 0 0 28px hsl(0deg 0% 100% / 65%);
-    }
-  }
+.profile-card ion-avatar img {
+  height: 128px;
+  width: 128px;
+  border-radius: 50%;
+  border: 2px solid var(--ion-color-light);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3); /* Sombra más sutil */
+}
+
+.ion-list-header-small {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--ion-color-light);
+}
+
+.hr-medium {
+  border: 0;
+  border-top: 1px solid var(--ion-color-light);
+  margin: 16px 0;
+}
+
+.list-custom ion-item {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-light);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.list-custom ion-icon {
+  font-size: 24px;
 }
