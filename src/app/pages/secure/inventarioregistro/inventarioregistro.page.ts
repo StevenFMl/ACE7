@@ -15,11 +15,12 @@ export class InventarioregistroPage implements OnInit {
   date: string;
   selectedPvp: string;
   costo_distribucion: string;
-  tipoPrecio: string; // Variable para almacenar el tipo de precio seleccionado
+  tipoPrecio: string;
   productos: any[] = [];
   initialRecordId: number;
   idPersona: string;
-  isDateModalOpen = false; // calendario
+  isDateModalOpen = false;
+
 
   constructor(
     private http: HttpClient,
@@ -56,19 +57,23 @@ export class InventarioregistroPage implements OnInit {
   }
 
   setCurrentDate() {
-    const today = new Date().toISOString().split('T')[0];
-    this.date = today;
+    const ecuadorDate = new Date().toLocaleDateString('en-CA', {
+      timeZone: 'America/Guayaquil',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    this.date = ecuadorDate;
   }
 
-  //--------------------------Funciones necesarias para el calendario-------------------------
   openDateModal() {
     this.isDateModalOpen = true;
   }
-  
+
   closeDateModal() {
     this.isDateModalOpen = false;
   }
-  
+
   onDateModalDismiss(event: any) {
     const selectedDate = event.detail?.value;
     if (selectedDate) {
@@ -78,12 +83,11 @@ export class InventarioregistroPage implements OnInit {
     }
     this.closeDateModal(); 
   }
-  
+
   confirmDate(selectedDate: string) {
     this.date = selectedDate.split('T')[0];
     this.closeDateModal();
   }
-  //---------------------------
 
   onProductChange(event: any) {
     this.productId = event.detail.value;
@@ -91,14 +95,21 @@ export class InventarioregistroPage implements OnInit {
     if (product) {
       this.selectedPvp = product.pvp;
       this.costo_distribucion = product.costo_distribucion;
-      this.loadInitialQuantity(this.productId);
+      //this.loadInitialQuantity(this.productId);
     }
   }
+  onPriceTypeChange(event: any) {
+    this.tipoPrecio = event.detail.value;
+    this.loadInitialQuantity(this.productId);  // Aquí se carga la cantidad inicial del producto
+  }
+  
+  
 
   loadInitialQuantity(productId: string) {
     this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
       accion: 'obtener_cantidad_inicial',
       producto_id: productId,
+      tipo_precio: this.tipoPrecio
     }).subscribe(
       response => {
         if (response.estado) {
@@ -115,7 +126,7 @@ export class InventarioregistroPage implements OnInit {
       producto_id: this.productId,
       cantidad_inicial: this.initialQuantity,
       fecha_registro: this.date,
-      tipo_precio: this.tipoPrecio, // Guardar el tipo de precio seleccionado
+      tipo_precio: this.tipoPrecio,
     };
 
     this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', datos)
@@ -127,7 +138,7 @@ export class InventarioregistroPage implements OnInit {
               window.location.reload();
             });
           } else {
-            await this.showToast(response.mensaje, 'warning'); // Mostrar mensaje del servidor
+            await this.showToast(response.mensaje, 'warning');
           }
         },
         error => console.error('Error en la solicitud:', error)
@@ -139,7 +150,7 @@ export class InventarioregistroPage implements OnInit {
       message,
       duration: 2000,
       position: 'top',
-      color, // Cambiar el color del toast según el tipo
+      color,
     });
     toast.present();
   }

@@ -112,10 +112,6 @@ export class LoginPage implements OnInit {
       } else {
         this.toastService.presentToast('Error', 'Por favor, complete todos los campos.', 'top', 'danger', 2000);
       }
-
-    
-    
-
   }
   togglePasswordVisibility(show: boolean): void {
     this.claveType = show ? 'text' : 'password';
