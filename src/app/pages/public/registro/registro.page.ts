@@ -75,67 +75,76 @@ export class RegistroPage implements OnInit {
 
   ngOnInit() {
     // Setup form
-    this.registro_form = this.formBuilder.group({
-      tipo_documento: ['', Validators.required], // Agregamos el campo de tipo de documento
-      cedula_extranjera: [
-        '',
-        Validators.compose([Validators.minLength(10), Validators.required]),
-      ],
-      cedula: [
-        '',
-        Validators.compose([
-          Validators.minLength(10),
-          Validators.required,
-          this.cedulaEcuatorianaValidator(),
-        ]),
-      ],
-      nombres: ['', [Validators.required]],
-      apellidos: ['', [Validators.required]],
-      fecha_nacimiento: ['', [Validators.required]],
-      ecivil: ['', [Validators.required]],
-      otroecivil: ['', [Validators.required]],
-      etnia: ['', [Validators.required]],
-      otraetnia: ['', [Validators.required]],
-      discapacidad: ['', [Validators.required]],
-      tipodis: [''],
-      porcentajedis: [''],
-      ncarnetdis: [''],
-      ocupacion: ['', [Validators.required]],
-      otraocupacion: ['', [Validators.required]],
-      nacionalidad: ['', [Validators.required]],
-      ciudad: ['', [Validators.required]],
-      provincia: ['', [Validators.required]],
-      parroquia: ['', [Validators.required]],
-      barrio: ['', [Validators.required]],
-      calle1: ['', [Validators.required]],
-      calle2: ['', [Validators.required]],
-      neducacion: ['', [Validators.required]],
-      genero: ['', [Validators.required]],
-      otrogenero: ['', [Validators.required]],
-      correo: ['', Validators.compose([Validators.email, Validators.required])],
-      telefono: [
-        '',
-        Validators.compose([
-          Validators.pattern('^[0-9]*$'),
-          Validators.minLength(10),
-          Validators.required,
-        ]),
-      ],
-      clave: [
-        '',
-        Validators.compose([Validators.minLength(8), Validators.required]),
-      ],
-      conf_clave: [
-        '',
-        Validators.compose([Validators.minLength(8), Validators.required]),
-      ],
-      terminos_condiciones: [false, Validators.requiredTrue],
-    });
-    let datos = {
-      // Otros campos...
-      terminos_condiciones: this.registro_form.value.terminos_condiciones
-  };
-  }
+     this.registro_form = this.formBuilder.group({
+    tipo_documento: ['', Validators.required],
+    cedula_extranjera: [
+      '',
+      Validators.compose([Validators.minLength(10), Validators.required]),
+    ],
+    cedula: [
+      '',
+      Validators.compose([
+        Validators.minLength(10),
+        Validators.required,
+        this.cedulaEcuatorianaValidator(),
+        Validators.pattern('^[0-9]*$'), // Solo números
+      ]),
+    ],
+    nombres: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$'), // Solo letras
+      ]),
+    ],
+    apellidos: [
+      '',
+      Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$'), // Solo letras
+      ]),
+    ],
+    fecha_nacimiento: ['', [Validators.required]],
+    ecivil: ['', [Validators.required]],
+    otroecivil: ['', [Validators.required]],
+    etnia: ['', [Validators.required]],
+    otraetnia: ['', [Validators.required]],
+    discapacidad: ['', [Validators.required]],
+    tipodis: [''],
+    porcentajedis: [''],
+    ncarnetdis: [''],
+    ocupacion: ['', [Validators.required]],
+    otraocupacion: ['', [Validators.required]],
+    nacionalidad: ['', [Validators.required]],
+    ciudad: ['', [Validators.required]],
+    provincia: ['', [Validators.required]],
+    parroquia: ['', [Validators.required]],
+    barrio: ['', [Validators.required]],
+    calle1: ['', [Validators.required]],
+    calle2: ['', [Validators.required]],
+    neducacion: ['', [Validators.required]],
+    genero: ['', [Validators.required]],
+    otrogenero: ['', [Validators.required]],
+    correo: ['', Validators.compose([Validators.email, Validators.required])],
+    telefono: [
+      '',
+      Validators.compose([
+        Validators.pattern('^[0-9]*$'), // Solo números
+        Validators.minLength(10),
+        Validators.required,
+      ]),
+    ],
+    clave: [
+      '',
+      Validators.compose([Validators.minLength(8), Validators.required]),
+    ],
+    conf_clave: [
+      '',
+      Validators.compose([Validators.minLength(8), Validators.required]),
+    ],
+    terminos_condiciones: [false, Validators.requiredTrue],
+  });
+}
 
   // Función openModal
   async openModal(modalName: string) {
@@ -332,11 +341,11 @@ export class RegistroPage implements OnInit {
       }
     });
   }
-  togglePasswordVisibility(show: boolean): void {
-    this.claveType = show ? 'text' : 'password';
+  togglePasswordVisibility() {
+    this.claveType = this.claveType === 'password' ? 'text' : 'password';
   }
 
-  toggleConfirmPasswordVisibility(show: boolean): void {
-    this.confClaveType = show ? 'text' : 'password';
-  }
+  toggleConfirmPasswordVisibility() {
+  this.confClaveType = this.confClaveType === 'password' ? 'text' : 'password';
+}
 }

@@ -24,7 +24,7 @@
 
       <ion-item color="medium" class="animate__animated animate__fadeInUp">
         <ion-label position="floating">
-          <ion-icon  name="lock-closed-outline"></ion-icon>
+          <ion-icon name="lock-closed-outline"></ion-icon>
           Contraseña
         </ion-label>
         <ion-input
@@ -39,9 +39,7 @@
           fill="clear"
           size="small"
           slot="end"
-          (mousedown)="togglePasswordVisibility(true)"
-          (mouseup)="togglePasswordVisibility(false)"
-          (mouseleave)="togglePasswordVisibility(false)">
+          (click)="togglePasswordVisibility()">
           <ion-icon [name]="claveType === 'password' ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
         </ion-button>
       </ion-item>

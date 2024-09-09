@@ -113,8 +113,8 @@ export class LoginPage implements OnInit {
         this.toastService.presentToast('Error', 'Por favor, complete todos los campos.', 'top', 'danger', 2000);
       }
   }
-  togglePasswordVisibility(show: boolean): void {
-    this.claveType = show ? 'text' : 'password';
+  togglePasswordVisibility(): void {
+    this.claveType = this.claveType === 'password' ? 'text' : 'password';
   }
   setBackgroundImage(imageUrl: string): void {
     this.backgroundImage = `url('${imageUrl}')`;

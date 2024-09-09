@@ -63,7 +63,7 @@ export class ReportPage {
           datasets: [
             {
               label: 'Ganancias',
-              data: this.reportData.map((item) => item.RF_CANTIDAD_VENDIDA),
+              data: this.reportData.map((item) => item.cuanto_gana),
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1,
