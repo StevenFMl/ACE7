@@ -21,7 +21,6 @@ export class InventarioregistroPage implements OnInit {
   idPersona: string;
   isDateModalOpen = false;
 
-
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -45,7 +44,7 @@ export class InventarioregistroPage implements OnInit {
   loadProducts() {
     this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
       accion: 'cargar_productos',
-      id_persona: this.idPersona
+      id_persona: this.idPersona,
     }).subscribe(
       response => {
         if (response.estado) {
@@ -95,21 +94,19 @@ export class InventarioregistroPage implements OnInit {
     if (product) {
       this.selectedPvp = product.pvp;
       this.costo_distribucion = product.costo_distribucion;
-      //this.loadInitialQuantity(this.productId);
     }
   }
+
   onPriceTypeChange(event: any) {
     this.tipoPrecio = event.detail.value;
     this.loadInitialQuantity(this.productId);  // Aquí se carga la cantidad inicial del producto
   }
-  
-  
 
   loadInitialQuantity(productId: string) {
     this.http.post<any>('https://dominant-crow-certainly.ngrok-free.app/WsMunicipioIonic/ws_gad.php', {
       accion: 'obtener_cantidad_inicial',
       producto_id: productId,
-      tipo_precio: this.tipoPrecio
+      tipo_precio: this.tipoPrecio,
     }).subscribe(
       response => {
         if (response.estado) {
@@ -134,9 +131,9 @@ export class InventarioregistroPage implements OnInit {
         async response => {
           if (response.estado) {
             await this.showToast('Producto guardado exitosamente.', 'success');
-            this.router.navigate(['/inventariomenu']).then(() => {
-              window.location.reload();
-            });
+            this.clearData();
+            // Navegar de vuelta al menú de inventario sin recargar
+            this.router.navigate(['/inventariomenu'], { state: { updated: true } });
           } else {
             await this.showToast(response.mensaje, 'warning');
           }
@@ -153,5 +150,14 @@ export class InventarioregistroPage implements OnInit {
       color,
     });
     toast.present();
+  }
+  //limpiar datos
+  clearData() {
+    this.productId = null;
+    this.initialQuantity = null;
+    
+    this.selectedPvp = null;
+    this.costo_distribucion = null;
+    this.tipoPrecio = null;
   }
 }
