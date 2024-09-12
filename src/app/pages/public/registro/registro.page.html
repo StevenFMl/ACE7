@@ -320,19 +320,24 @@
         <ion-input required color="dark" formControlName="telefono" type="text" [(ngModel)]="txt_telefono"></ion-input>
       </ion-item>
 
-      <ion-item color="medium" class="animate_animated animate_fadeInUp">
-        <ion-label position="floating">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          Contraseña
-        </ion-label>
-        <ion-input required color="dark" formControlName="clave" [type]="claveType"
-          placeholder="Ingrese su contraseña, minimo 8 digitos" [(ngModel)]="txt_clave">
-        </ion-input>
-        <ion-button fill="clear" size="small" slot="end" (mousedown)="togglePasswordVisibility(true)"
-          (mouseup)="togglePasswordVisibility(false)" (mouseleave)="togglePasswordVisibility(false)">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
+ <ion-item color="medium" class="animate_animated animate_fadeInUp">                                                                                             
+   <ion-label position="floating">                                                                                                                               
+     <ion-icon name="lock-closed-outline"></ion-icon>                                                                                                            
+     Contraseña                                                                                                                                                  
+   </ion-label>                                                                                                                                                  
+   <ion-input required color="dark" formControlName="clave" [type]="claveType"                                                                                   
+     placeholder="Ingrese su contraseña, minimo 8 digitos" [(ngModel)]="txt_clave">                                                                              
+   </ion-input>                                                                                                                                                  
+   <ion-button fill="clear" size="small" slot="end" (mousedown)="togglePasswordVisibility(true)"                                                                 
+     (mouseup)="togglePasswordVisibility(false)" (mouseleave)="togglePasswordVisibility(false)">                                                                 
+     <ion-icon name="eye-outline"></ion-icon>                                                                                                                    
+   </ion-button>                                                                                                                                                 
+   <div *ngIf="registro_form.get('clave').errors && registro_form.get('clave').dirty">                                                                           
+     <div style="color: #797773;" *ngIf="registro_form.get('clave').errors.strongPassword">                                                                      
+       La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.                                       
+     </div>                                                                                                                                                      
+   </div>                                                                                                                                                        
+ </ion-item>
 
       <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">

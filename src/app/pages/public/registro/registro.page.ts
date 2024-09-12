@@ -123,7 +123,11 @@ export class RegistroPage implements OnInit {
       ],
       clave: [
         '',
-        Validators.compose([Validators.minLength(8), Validators.required]),
+        Validators.compose([
+          Validators.minLength(8),
+          Validators.required,
+          this.strongPasswordValidator(),
+        ]),
       ],
       conf_clave: [
         '',
@@ -134,6 +138,24 @@ export class RegistroPage implements OnInit {
     let datos = {
       // Otros campos...
       terminos_condiciones: this.registro_form.value.terminos_condiciones,
+    };
+  }
+
+  strongPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+
+      const hasUpperCase = /[A-Z]/.test(value);
+      const hasLowerCase = /[a-z]/.test(value);
+      const hasNumeric = /[0-9]/.test(value);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+      const isValid =
+        hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar;
+      return !isValid ? { strongPassword: true } : null;
     };
   }
 
