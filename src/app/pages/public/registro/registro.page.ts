@@ -73,12 +73,6 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  // Function to validate that a string contains only letters
-  validateOnlyLetters(input: string): boolean {
-    const lettersRegex = /^[A-Za-z\s]+$/;
-    return lettersRegex.test(input);
-  }
-
   ngOnInit() {
     // Setup form
     this.registro_form = this.formBuilder.group({
@@ -139,9 +133,8 @@ export class RegistroPage implements OnInit {
     });
     let datos = {
       // Otros campos...
-      terminos_condiciones: this.registro_form.value.terminos_condiciones
+      terminos_condiciones: this.registro_form.value.terminos_condiciones,
     };
-  }
   }
 
   // Función openModal
@@ -193,18 +186,9 @@ export class RegistroPage implements OnInit {
         );
       }
 
-      // Validate that "Nombres" and "Apellidos" contain only letters
-      if (!this.validateOnlyLetters(this.registro_form.value.nombres)) {
-        this.authService.showToast('El campo Nombres solo debe contener letras');
-        return;
-      }
-
-      if (!this.validateOnlyLetters(this.registro_form.value.apellidos)) {
-        this.authService.showToast('El campo Apellidos solo debe contener letras');
-        return;
-      }
-
-      if (this.registro_form.value.clave !== this.registro_form.value.conf_clave) {
+      if (
+        this.registro_form.value.clave !== this.registro_form.value.conf_clave
+      ) {
         this.authService.showToast('Las contraseñas no coinciden');
         return;
       }
@@ -286,7 +270,7 @@ export class RegistroPage implements OnInit {
     return emailRegex.test(correo);
   }
   validatePhoneNumber(telefono: string): boolean {
-    const phoneRegex = /^[0-9]{10}$/; // Asumiendo que el número de teléfono tiene 10 dígitos
+    const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(telefono);
   }
   cedulaEcuatorianaValidator(): ValidatorFn {
