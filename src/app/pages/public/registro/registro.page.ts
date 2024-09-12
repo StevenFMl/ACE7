@@ -77,6 +77,7 @@ export class RegistroPage implements OnInit {
   validateOnlyLetters(input: string): boolean {
     const lettersRegex = /^[A-Za-z\s]+$/;
     return lettersRegex.test(input);
+  }
 
   ngOnInit() {
     // Setup form
@@ -139,7 +140,8 @@ export class RegistroPage implements OnInit {
     let datos = {
       // Otros campos...
       terminos_condiciones: this.registro_form.value.terminos_condiciones
-  };
+    };
+  }
   }
 
   // Función openModal
