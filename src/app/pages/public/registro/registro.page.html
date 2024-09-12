@@ -61,7 +61,8 @@
           <ion-icon name="person" item-start></ion-icon>
           Nombres
         </ion-label>
-        <ion-input type="text" required color="dark" formControlName="nombres" type="text" [(ngModel)]="txt_nombre"></ion-input>
+        <ion-input type="text" required color="dark" formControlName="nombres" type="text"
+          [(ngModel)]="txt_nombre"></ion-input>
       </ion-item>
       <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
@@ -69,7 +70,8 @@
           <ion-icon name="people" item-start></ion-icon>
           Apellidos
         </ion-label>
-        <ion-input type="text" required color="dark" formControlName="apellidos" type="text" [(ngModel)]="txt_apellido"></ion-input>
+        <ion-input type="text" required color="dark" formControlName="apellidos" type="text"
+          [(ngModel)]="txt_apellido"></ion-input>
       </ion-item>
       <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
@@ -104,7 +106,7 @@
         </ion-select>
       </ion-item>
       <!-- Campo de texto adicional para "Otro" -->
-      <ion-item *ngIf="sel_ecivil === 'otro'">
+      <ion-item *ngIf="sel_ecivil === 'otro'" color="medium">
         <ion-label position="floating" color="dark" class="animate_animated animate_fadeInUp">
           Especifique su estado civil
         </ion-label>
@@ -126,7 +128,7 @@
       </ion-item>
 
       <!-- Campo de texto adicional para "Otro" -->
-      <ion-item *ngIf="sel_etnia === 'otro'">
+      <ion-item *ngIf="sel_etnia === 'otro'" color="medium">
         <ion-label position="floating" color="dark" class="animate_animated animate_fadeInUp">
           Especifique su Etnia
         </ion-label>
@@ -147,7 +149,7 @@
 
       <!-- Mostrar campos adicionales si se selecciona "Sí" -->
       <div *ngIf="sel_discapacidad === 'Si'">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="eye-outline" item-start></ion-icon>
             Tipo de discapacidad
@@ -155,7 +157,7 @@
           <ion-input required color="dark" formControlName="tipodis" type="text" [(ngModel)]="txt_tipodis"
             placeholder="Ingrese el tipo de discapacidad"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="stats-chart-outline" item-start></ion-icon>
             Porcentaje
@@ -163,7 +165,7 @@
           <ion-input required color="dark" formControlName="porcentajedis" type="text" [(ngModel)]="txt_porcentajedis"
             placeholder="Ingrese el porsentaje de discapacidad"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="card-outline" item-start></ion-icon>
             N° Carnet
@@ -194,7 +196,7 @@
       </ion-item>
 
       <!-- Campo de texto adicional para "Otro" -->
-      <ion-item *ngIf="sel_ocupacion === 'otro'">
+      <ion-item *ngIf="sel_ocupacion === 'otro'" color="medium">
         <ion-label position="floating" color="dark" class="animate_animated animate_fadeInUp">
           Especifique su ocupación
         </ion-label>
@@ -223,7 +225,7 @@
 
       <!-- Mostrar campos adicionales si se selecciona una ciudad -->
       <div *ngIf="sel_provincia">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label color="dark" class="animate_animated animate_fadeInUp">
             <ion-icon name="flag-outline" item-start></ion-icon>
             Ciudad
@@ -232,7 +234,7 @@
             <ion-select-option *ngFor="let ciu of ciudades"
               value={{ciu.codigo}}>{{ciu.nombre}}</ion-select-option></ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="compass-outline" item-start></ion-icon>
             Parroquia
@@ -240,7 +242,7 @@
           <ion-input required color="dark" formControlName="parroquia" type="text" [(ngModel)]="txt_parroquia"
             placeholder="Selecciona una Parroquia"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="compass-outline" item-start></ion-icon>
             Barrio
@@ -249,7 +251,7 @@
             placeholder="Ingrese el barrio"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="compass-outline" item-start></ion-icon>
             Calle Principal
@@ -258,7 +260,7 @@
             placeholder="Ingrese la calle principal"></ion-input>
         </ion-item>
 
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>
             <ion-icon name="compass-outline" item-start></ion-icon>
             Calle Secundaria
@@ -320,24 +322,25 @@
         <ion-input required color="dark" formControlName="telefono" type="text" [(ngModel)]="txt_telefono"></ion-input>
       </ion-item>
 
- <ion-item color="medium" class="animate_animated animate_fadeInUp">                                                                                             
-   <ion-label position="floating">                                                                                                                               
-     <ion-icon name="lock-closed-outline"></ion-icon>                                                                                                            
-     Contraseña                                                                                                                                                  
-   </ion-label>                                                                                                                                                  
-   <ion-input required color="dark" formControlName="clave" [type]="claveType"                                                                                   
-     placeholder="Ingrese su contraseña, minimo 8 digitos" [(ngModel)]="txt_clave">                                                                              
-   </ion-input>                                                                                                                                                  
-   <ion-button fill="clear" size="small" slot="end" (mousedown)="togglePasswordVisibility(true)"                                                                 
-     (mouseup)="togglePasswordVisibility(false)" (mouseleave)="togglePasswordVisibility(false)">                                                                 
-     <ion-icon name="eye-outline"></ion-icon>                                                                                                                    
-   </ion-button>                                                                                                                                                 
-   <div *ngIf="registro_form.get('clave').errors && registro_form.get('clave').dirty">                                                                           
-     <div style="color: #797773;" *ngIf="registro_form.get('clave').errors.strongPassword">                                                                      
-       La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.                                       
-     </div>                                                                                                                                                      
-   </div>                                                                                                                                                        
- </ion-item>
+      <ion-item color="medium" class="animate_animated animate_fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Contraseña
+        </ion-label>
+        <ion-input required color="dark" formControlName="clave" [type]="claveType"
+          placeholder="Ingrese su contraseña, minimo 8 digitos" [(ngModel)]="txt_clave">
+        </ion-input>
+        <ion-button fill="clear" size="small" slot="end" (mousedown)="togglePasswordVisibility(true)"
+          (mouseup)="togglePasswordVisibility(false)" (mouseleave)="togglePasswordVisibility(false)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <div *ngIf="registro_form.get('clave').errors && registro_form.get('clave').dirty">
+          <div style="color: #797773;" *ngIf="registro_form.get('clave').errors.strongPassword">
+            La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres
+            especiales.
+          </div>
+        </div>
+      </ion-item>
 
       <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
