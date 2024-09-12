@@ -367,10 +367,19 @@ export class ChartsPage implements OnInit {
   }
 
   async guardarDatos() {
+    // Verificar que no haya campos vacíos en los datos de entrada
+    const materiasPrimasValidas = this.materiasPrimas.every(materia => materia.nombre.trim() !== '');
+    const manoDeObraValida = this.manoDeObraList.every(mano => mano.nombre.trim() !== '');
+    const costosIndirectosValidos = this.costosIndirectosList.every(costo => costo.nombre.trim() !== '');
+    const otrosGastosValidos = this.otrosGastoList.every(gasto => gasto.nombre.trim() !== '');
+  
+    // Validación de campos vacíos
     if (!this.txt_producto || !this.margenBeneficio || !this.impuestos || !this.costoProduccion ||
       !this.costoFabrica || !this.costoDistribucion || !this.pvp || !this.materiasPrimas.length ||
-      !this.manoDeObraList.length || !this.costosIndirectosList.length || !this.otrosGastoList.length) {
-      this.authService.showToast('Por favor, completa todos los campos antes de guardar.');
+      !this.manoDeObraList.length || !this.costosIndirectosList.length || !this.otrosGastoList.length ||
+      !materiasPrimasValidas || !manoDeObraValida || !costosIndirectosValidos || !otrosGastosValidos) {
+      
+      this.authService.showToast('Por favor, completa todos los campos antes de guardar, incluyendo nombres en los listados.');
       return;
     }
   
@@ -393,12 +402,13 @@ export class ChartsPage implements OnInit {
       otrosGastoList: this.otrosGastoList
     };
   
-    console.log("Datos a enviar:", datos);  // Agrega esta línea para verificar los datos
+    console.log("Datos a enviar:", datos);  // Verificación de los datos enviados
   
     try {
       const res: any = await this.authService.postData(datos).toPromise();
       if (res.estado) {
         this.mostrarMensajeRegistroExitoso();
+        
         this.navCtrl.navigateRoot(['/listacostos']);
       } else {
         this.authService.showToast(res.mensaje);
@@ -410,6 +420,7 @@ export class ChartsPage implements OnInit {
 
   async mostrarMensajeRegistroExitoso() {
     const toast = await this.authService.showToast2('Éxito, ¡Datos registrados correctamente!');
+    this.limpiarCampos();
   }
 
   unidadChange(event, index) {
@@ -424,5 +435,23 @@ export class ChartsPage implements OnInit {
     // Lógica para manejar el cambio de costo indirecto (ej: si es luz, internet, etc.)
   }
   
-
+  limpiarCampos() {
+    this.txt_producto = '';
+    this.margenBeneficio = 35;
+    this.impuestos = 15;
+    this.costoProduccion = null;
+    this.costoFabrica = null;
+    this.costoDistribucion = null;
+    this.pvp = null;
+    this.tproducto = null;
+    this.utilidadv = 0;
+    this.utilidadc = 0;
+  
+    // Resetear arrays
+    this.materiasPrimas = [{ nombre: '', costo: 0, unidad: 'unidad', vtotal: 0 }];
+    this.manoDeObraList = [{ nombre: '', costo: 0, sueldoMensual: 0, tipoTiempo: '', horasTrabajadas: 0 }];
+    this.costosIndirectosList = [{ nombre: '', costo: 0, horas: 0, cantidadagua: 0, cantidadGas: 0 }];
+    this.otrosGastoList = [{ nombre: '', costo: 0, vtotal: 0 }];
+  }
+  
 }

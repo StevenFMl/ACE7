@@ -46,15 +46,15 @@
       </ion-item>
 
       <ion-item *ngIf="sel_tipoced === '2'" color="medium" class="animate_animated animate_fadeInUp">
-  <ion-label position="floating">
-    <ion-icon name="person" item-start></ion-icon>
-    Número de Documento Extranjero
-  </ion-label>
-  <ion-input formControlName="cedula_extranjera" type="text" [(ngModel)]="txt_cedula"></ion-input>
-  <div *ngIf="registro_form.get('cedula_extranjera').errors && registro_form.get('cedula_extranjera').dirty">
-    <!-- Puedes mostrar errores específicos aquí si es necesario -->
-  </div>
-</ion-item>
+        <ion-label position="floating">
+          <ion-icon name="person" item-start></ion-icon>
+          Número de Documento Extranjero
+        </ion-label>
+        <ion-input formControlName="cedula" type="text" [(ngModel)]="txt_cedula"></ion-input>
+        <div *ngIf="registro_form.get('cedula').errors && registro_form.get('cedula').dirty">
+          <!-- Puedes mostrar errores específicos aquí si es necesario -->
+        </div>
+      </ion-item>
 
       <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
@@ -127,7 +127,7 @@
       </ion-item>
 
       <!-- Campo de texto adicional para "Otro" -->
-      <ion-item *ngIf="sel_etnia === 'otro'">
+      <ion-item *ngIf="registro_form.get('etnia').value === 'otro'">
         <ion-label position="floating" color="dark" class="animate_animated animate_fadeInUp">
           Especifique su Etnia
         </ion-label>
@@ -321,7 +321,7 @@
         <ion-input required color="dark" formControlName="telefono" type="text" [(ngModel)]="txt_telefono"></ion-input>
       </ion-item>
 
-      <ion-item color="medium" class="animate__animated animate__fadeInUp">
+      <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
           <ion-icon name="lock-closed-outline"></ion-icon>
           Contraseña
@@ -333,14 +333,14 @@
           <ion-icon [name]="claveType === 'password' ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
         </ion-button>
       </ion-item>
-      
-      <ion-item color="medium" class="animate__animated animate__fadeInUp">
+
+      <ion-item color="medium" class="animate_animated animate_fadeInUp">
         <ion-label position="floating">
           <ion-icon name="lock-closed-outline"></ion-icon>
           Confirmar Contraseña
         </ion-label>
         <ion-input required color="dark" formControlName="conf_clave" [type]="confClaveType"
-          placeholder="Confirmar contraseña" [(ngModel)]="txt_conf_clave">
+          placeholder="Confirmar contraseña">
         </ion-input>
         <ion-button fill="clear" size="small" slot="end" (click)="toggleConfirmPasswordVisibility()">
           <ion-icon [name]="confClaveType === 'password' ? 'eye-outline' : 'eye-off-outline'"></ion-icon>

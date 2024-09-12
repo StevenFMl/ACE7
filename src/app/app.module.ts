@@ -25,7 +25,7 @@ import { NgChartsModule } from 'ng2-charts';
     AppRoutingModule,
     NgChartsModule,
     HttpClientModule,
-    IonicStorageModule.forRoot() // Configura el módulo aquí
+    IonicStorageModule.forRoot() 
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

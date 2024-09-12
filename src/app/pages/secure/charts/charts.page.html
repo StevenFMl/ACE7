@@ -1,9 +1,9 @@
 <ion-header collapse="fade" [translucent]="true">
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-button color="light" routerLink="/listacostos">
+      <ion-button color="light" (click)="limpiarCampos()" routerLink="/listacostos">
         <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-button>
+      </ion-button>      
     </ion-buttons>
     <ion-title color="light" style="text-align: center; flex: 1;">Costos de Producción</ion-title>
     <ion-buttons slot="end">
@@ -64,11 +64,12 @@
           </ion-item>
           <ion-item>
             <ion-label position="floating">Precio Unitario Por Produccion</ion-label>
-            <ion-input [(ngModel)]="materiasPrimas[i].vtotal" type="number" (ionChange)="calcular()"></ion-input>
+            <ion-input [(ngModel)]="materiasPrimas[i].vtotal" type="number" (ionChange)="calcular()" ></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Costo Unitario</ion-label>
-            <ion-input [(ngModel)]="materiasPrimas[i].costo" type="number" (ionChange)="calcular()"></ion-input>
+            <ion-input [(ngModel)]="materiasPrimas[i].costo" type="number" (ionChange)="calcular()" readonly ></ion-input>
+
           </ion-item>
           <ion-item>
             <ion-label position="floating">Unidad de Medida</ion-label>
@@ -154,7 +155,7 @@
           <!-- Campo para Costo -->
           <ion-item>
             <ion-label position="floating">Costo Unitario</ion-label>
-            <ion-input [(ngModel)]="manoDeObraList[i].costo" type="number" (ionChange)="calcular()"></ion-input>
+            <ion-input [(ngModel)]="manoDeObraList[i].costo" type="number" (ionChange)="calcular()" readonly></ion-input>
           </ion-item>
           
         </ion-card>
@@ -219,7 +220,7 @@
     
           <ion-item>
             <ion-label position="floating">Costo Unitario</ion-label>
-            <ion-input [(ngModel)]="costosIndirectosList[i].costo" type="number" (ionChange)="calcular()"></ion-input>
+            <ion-input [(ngModel)]="costosIndirectosList[i].costo" type="number" (ionChange)="calcular()" readonly></ion-input>
           </ion-item>
         </ion-card>
         
@@ -259,7 +260,7 @@
       <!-- Campo para el costo -->
       <ion-item>
         <ion-label position="floating">Costo</ion-label>
-        <ion-input [(ngModel)]="otrosGastoList[i].costo" type="number" (ionChange)="calcular()"></ion-input>
+        <ion-input [(ngModel)]="otrosGastoList[i].costo" type="number" (ionChange)="calcular()" readonly></ion-input>
       </ion-item>
     </ion-card>
     
@@ -299,39 +300,39 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Resultados -->
-    <ion-card color="medium">
-      <ion-card-content>
-        <ion-item color="medium" *ngIf="costoProduccion !== null">
-          <ion-label>Costo de Producción</ion-label>
-          <ion-badge style="color: white;" slot="end">{{ costoProduccion | currency }}</ion-badge>
-        </ion-item>
-        <ion-item color="medium" *ngIf="costoFabrica !== null">
-          <ion-label>Costo de Fábrica</ion-label>
-          <ion-badge style="color: white;" slot="end">{{ costoFabrica | currency }}</ion-badge>
-        </ion-item>
-        <ion-item color="medium" *ngIf="costoDistribucion !== null">
-          <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            Costo de Distribución
-          </ion-label>
-          <ion-input [(ngModel)]="costoDistribucion" type="number" 
-                     placeholder="Ingrese el costo" 
-                     style="width: 150px; text-align: right; color: green;"></ion-input>
-        </ion-item>
-        
-        <ion-item color="medium" *ngIf="pvp !== null">
-          <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-            PVP (recomendado)
-          </ion-label>
-          <ion-input [(ngModel)]="pvp" type="number" 
-                     placeholder="Ingrese el PVP" 
-                     style="width: 150px; text-align: right; color: green;"></ion-input>
-          </ion-item>
-          
-        
-        
-      </ion-card-content>
-    </ion-card>
+<!-- Resultados -->
+<ion-card color="medium">
+  <ion-card-content>
+    <ion-item color="medium">
+      <ion-label>Costo de Producción</ion-label>
+      <ion-badge style="color: white;" slot="end">{{ costoProduccion ? (costoProduccion | currency) : 'No disponible' }}</ion-badge>
+    </ion-item>
+    <ion-item color="medium">
+      <ion-label>Costo de Fábrica</ion-label>
+      <ion-badge style="color: white;" slot="end">{{ costoFabrica ? (costoFabrica | currency) : 'No disponible' }}</ion-badge>
+    </ion-item>
+    <ion-item color="medium">
+      <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        Costo de Distribución
+      </ion-label>
+      <ion-input [(ngModel)]="costoDistribucion" type="number" 
+                 placeholder="Ingrese el costo" 
+                 style="width: 150px; text-align: right; color: green;">
+      </ion-input>
+    </ion-item>
+    
+    <ion-item color="medium">
+      <ion-label style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+        PVP (recomendado)
+      </ion-label>
+      <ion-input [(ngModel)]="pvp" type="number" 
+                 placeholder="Ingrese el PVP" 
+                 style="width: 150px; text-align: right; color: green;">
+      </ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
 
     <ion-button class="button-container" color="danger" expand="small" (click)="guardarDatos()">Guardar</ion-button>
   </div>

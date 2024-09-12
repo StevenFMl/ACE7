@@ -111,6 +111,17 @@ export class EditproductoPage implements OnInit {
   ) {
     this.init();  
   }
+  
+  async ionViewWillEnter() {
+    this.limpiarCampos();  // Limpia todos los datos antes de cargar un nuevo producto
+    this.codigo = await this.storage.get('id'); 
+    if (this.codigo) {
+      this.consultarDato(this.codigo);  
+    } else {
+      console.error('No se pudo obtener el código de persona del almacenamiento.');
+    }
+    this.createBarChart();
+  }
 
   
   private async init() {
@@ -341,6 +352,21 @@ export class EditproductoPage implements OnInit {
   }
 
   async guardarCambios() {
+    // Verificar que no haya campos vacíos en los datos de entrada
+    const materiasPrimasValidas = this.materiasPrimas.every(materia => materia.nombre.trim() !== '');
+    const manoDeObraValida = this.manoDeObraList.every(mano => mano.nombre.trim() !== '');
+    const costosIndirectosValidos = this.costosIndirectosList.every(costo => costo.nombre.trim() !== '');
+    const otrosGastosValidos = this.otrosGastoList.every(gasto => gasto.nombre.trim() !== '');
+  
+    // Validación de campos vacíos
+    if (!this.txt_producto || !this.margenBeneficio || !this.impuestos || !this.costoProduccion ||
+        !this.costoFabrica || !this.costoDistribucion || !this.pvp ||
+        !this.materiasPrimas.length || !this.manoDeObraList.length || !this.costosIndirectosList.length || !this.otrosGastoList.length ||
+        !materiasPrimasValidas || !manoDeObraValida || !costosIndirectosValidos || !otrosGastosValidos) {
+      await this.authService.showToast('Error: Todos los campos deben ser completados.');
+      return; // Detener la ejecución si hay campos vacíos
+    }
+  
     const datos = {
       accion: "editarProducto",
       productoId: this.productoId,
@@ -366,14 +392,17 @@ export class EditproductoPage implements OnInit {
   
       if (res.success) {
         await this.authService.showToast('Éxito: Producto actualizado correctamente');
+        
         this.navCtrl.navigateRoot('/listacostos');
+        
       } else {
-        await this.authService.showToast(`Error: ${res.message}`);
+        
       }
     } catch (error) {
       await this.authService.showToast('Error: No se pudo completar la solicitud. Inténtalo de nuevo.');
     }
   }
+  
   
   private createBarChart() {
     const data = [65, 59, 80, 81, 56, 55, 40];
@@ -397,5 +426,24 @@ export class EditproductoPage implements OnInit {
   
   async mostrarMensajeRegistroExitoso() {
     await this.authService.showToast('Éxito: Datos registrados correctamente');
+  }
+  limpiarCampos() {
+    
+    this.txt_producto = '';
+    this.margenBeneficio = 35;
+    this.impuestos = 15;
+    this.costoProduccion = null;
+    this.costoFabrica = null;
+    this.costoDistribucion = null;
+    this.pvp = null;
+    this.tproducto = null;
+    this.utilidadv = 0;
+    this.utilidadc = 0;
+  
+    // Resetear arrays
+    this.materiasPrimas = [{ nombre: '', costo: 0, unidad: 'unidad', vtotal: 0 }];
+    this.manoDeObraList = [{ nombre: '', costo: 0, sueldoMensual: 0, tipoTiempo: '', horasTrabajadas: 0 }];
+    this.costosIndirectosList = [{ nombre: '', costo: 0, horas: 0, cantidadagua: 0, cantidadGas: 0 }];
+    this.otrosGastoList = [{ nombre: '', costo: 0, vtotal: 0 }];
   }
 }
