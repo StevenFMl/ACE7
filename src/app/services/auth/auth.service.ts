@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';  
+import { Storage } from '@ionic/storage-angular';
 import { NavController } from '@ionic/angular';
 import { catchError, throwError } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class AuthService {
     private toastCtrl: ToastController,
     private router: Router,
     private navCtrl: NavController,
-    private storage: Storage 
+    private storage: Storage
   ) {
     this.init();
   }
@@ -46,13 +46,28 @@ export class AuthService {
   // Verificar stock
   checkStockMinimo(productos: any[]): string[] {
     let alertMessages: string[] = [];
-    const umbralCritico = 1000;
+    const umbralCritico = 100;
+    const productosAgrupados = new Map();
 
     productos.forEach((producto) => {
-      if (producto.pvp <= umbralCritico) {
-        alertMessages.push(`¡Atención! El stock del producto ${producto.nombre} es bajo.`);
+      // Agrupar productos por nombre y tomar la menor cantidad
+      if (!productosAgrupados.has(producto.nombre)) {
+        productosAgrupados.set(producto.nombre, producto.cantidad_inicial);
+      } else {
+        productosAgrupados.set(
+          producto.nombre,
+          Math.min(productosAgrupados.get(producto.nombre), producto.cantidad_inicial)
+        );
       }
     });
+
+    // Verificar stock mínimo después de agrupar
+    productosAgrupados.forEach((cantidad_inicial, nombre) => {
+      if (cantidad_inicial < umbralCritico) {
+        alertMessages.push(`¡Atención! El stock del producto ${nombre} es bajo.`);
+      }
+    });
+
     return alertMessages;
   }
 
