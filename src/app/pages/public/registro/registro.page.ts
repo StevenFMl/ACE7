@@ -243,7 +243,8 @@ export class RegistroPage implements OnInit {
     this.authService.postData(datos).subscribe((res: any) => {
       if (res.estado == true) {
         this.mostrarMensajeRegistroExitoso();
-        this.router.navigate(['/login']); // Redirecciona al inicio de sesión
+        this.router.navigate(['/login']);
+        this.registro_form.reset(); 
       } else {
         this.authService.showToast(res.mensaje);
       }
