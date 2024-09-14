@@ -70,11 +70,17 @@ export class RegistroPage implements OnInit {
     this.authService.getSession('persona').then((res: any) => {
       this.lnacionalidades(this.codigo), this.lciudades(this.codigo);
       this.lprovincias(this.codigo);
+      
     });
   }
+  validateOnlyLetters(input: string): boolean {
+    const lettersRegex = /^[A-Za-z\s]+$/;
+    return lettersRegex.test(input); }
+
 
   ngOnInit() {
     // Setup form
+    
     this.registro_form = this.formBuilder.group({
       tipo_documento: ['', Validators.required],
       cedula: ['', [Validators.required, Validators.minLength(10), Validators.pattern('^[0-9]*$')]],
@@ -103,7 +109,7 @@ export class RegistroPage implements OnInit {
       otrogenero: [''],
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10)]],
-      clave: ['', [Validators.required, Validators.minLength(8)]],
+      clave: ['', [Validators.required,this.strongPasswordValidator(), Validators.minLength(8)]],
       conf_clave: ['', [Validators.required, Validators.minLength(8)]],
       terminos_condiciones: [false, Validators.requiredTrue],
     });
@@ -154,8 +160,19 @@ export class RegistroPage implements OnInit {
       this.registro_form.value.telefono == '' ||
       this.registro_form.value.clave == '' ||
       this.registro_form.value.conf_clave == ''
+      
     ) {
       this.authService.showToast('Todos los campos son obligatorios y no pueden estar vacíos');
+      return;
+    }
+
+    if (!this.validateOnlyLetters(this.registro_form.value.nombres)) {
+      this.authService.showToast('El campo Nombres solo debe contener letras');
+      return;
+    }
+
+    if (!this.validateOnlyLetters(this.registro_form.value.apellidos)) {
+      this.authService.showToast('El campo Apellidos solo debe contener letras');
       return;
     }
 
@@ -220,6 +237,7 @@ export class RegistroPage implements OnInit {
       correo: this.txt_correo,
       clave: this.txt_clave,
       conf_clave: this.txt_clave,
+      terminos_condiciones: this.registro_form.value.terminos_condiciones,
     };
 
     this.authService.postData(datos).subscribe((res: any) => {
@@ -242,13 +260,14 @@ export class RegistroPage implements OnInit {
       3000
     );
   }
+  
 
   validateEmail(correo: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(correo);
   }
   validatePhoneNumber(telefono: string): boolean {
-    const phoneRegex = /^[0-9]{10}$/; // Asumiendo que el número de teléfono tiene 10 dígitos
+    const phoneRegex = /^[0-9]{10}$/;
     return phoneRegex.test(telefono);
   }
   cedulaEcuatorianaValidator(): ValidatorFn {
@@ -317,4 +336,23 @@ export class RegistroPage implements OnInit {
   toggleConfirmPasswordVisibility() {
     this.confClaveType = this.confClaveType === 'password' ? 'text' : 'password';
   }
+  strongPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const value = control.value;
+      if (!value) {
+        return null;
+      }
+
+      const hasUpperCase = /[A-Z]/.test(value);
+      const hasLowerCase = /[a-z]/.test(value);
+      const hasNumeric = /[0-9]/.test(value);
+      const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+      const isValid =
+        hasUpperCase && hasLowerCase && hasNumeric && hasSpecialChar;
+      return !isValid ? { strongPassword: true } : null;
+    };
+  }
+
+  
 }
