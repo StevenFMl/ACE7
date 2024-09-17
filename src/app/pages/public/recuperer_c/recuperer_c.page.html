@@ -8,16 +8,21 @@
 
 <ion-content>
   <div class="ion-padding ion-full-height ion-flex ion-flex-center">
+
+    <!-- Logo y descripción -->
     <div class="logo-container">
       <h1 class="animate__animated animate__fadeInUp">
-        <ion-text color="dark">¿Olvidaste tu contraseña?</ion-text>
+        <ion-text color="dark" *ngIf="!show_code_input">¿Olvidaste tu contraseña?</ion-text>
+        <ion-text color="dark" *ngIf="show_code_input">Ingresa el código de recuperación</ion-text>
       </h1>
       <p class="animate__animated animate__fadeInUp">
-        <ion-text color="secondary">Ingresa tu cédula para recuperar tu contraseña.</ion-text>
+        <ion-text color="secondary" *ngIf="!show_code_input">Ingresa tu cédula para recuperar tu contraseña.</ion-text>
+        <ion-text color="secondary" *ngIf="show_code_input">Revisa tu correo y escribe el código aquí.</ion-text>
       </p>
     </div>
 
-    <form class="form-default" [formGroup]="reset_form" (ngSubmit)="resetPassword()">
+    <!-- Formulario para ingresar la cédula -->
+    <form *ngIf="!show_code_input" class="form-default" [formGroup]="reset_form" (ngSubmit)="resetPassword()">
       <ion-item color="dark" class="animate__animated animate__fadeInUp">
         <ion-label position="floating">
           <ion-icon name="person" slot="start"></ion-icon>
@@ -32,6 +37,22 @@
       </ion-button>
     </form>
 
+    <!-- Formulario para ingresar el código de verificación -->
+    <form *ngIf="show_code_input" class="form-default" [formGroup]="code_form" (ngSubmit)="verifyCode()">
+      <ion-item color="dark" class="animate__animated animate__fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="key" slot="start"></ion-icon>
+          Código de verificación
+        </ion-label>
+        <ion-input color="light" type="text" formControlName="code" maxlength="6" pattern="[0-9]*" inputmode="numeric">
+        </ion-input>
+      </ion-item>
+
+      <ion-button expand="block" size="large" color="danger" class="ion-margin-top" type="submit" [disabled]="code_form.invalid">
+        Verificar Código
+      </ion-button>
+    </form>
+
     <div class="ion-text-center ion-margin-top">
       <ion-text color="medium">
         <small>&copy;{{current_year}} TuEmpresa</small>
@@ -39,4 +60,3 @@
     </div>
   </div>
 </ion-content>
-
