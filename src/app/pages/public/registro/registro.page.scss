@@ -19,10 +19,17 @@
     h1 {
       font-size: 32px;
       font-weight: 800;
+      margin-top: -10px; /* Ajusta la posición hacia arriba */
     }
 
     p {
       margin-bottom: 42px;
     }
   }
+  .small-logo {
+    width: 140px; /* Ajusta el tamaño de la imagen */
+    height: auto;
+    margin-bottom: auto; /* Espacio debajo de la imagen */
+  }
+  
 }
