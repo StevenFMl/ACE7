@@ -43,7 +43,7 @@ const routes: Routes = [
           import('../pages/secure/payments/payments.module').then(
             (m) => m.PaymentsPageModule
           ),
-        canActivate: [ReloadGuard], // Aplica el guard aquí
+        canActivate: [ReloadGuard], 
       },
       {
         path: 'report',

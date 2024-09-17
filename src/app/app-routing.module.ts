@@ -12,7 +12,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/secure/secure.module').then((m) => m.SecureModule),
-    canActivate: [AuthGuard], // Protege esta ruta con el guardia de ruta
+    canActivate: [AuthGuard], 
   },
   {
     path: 'welcome',

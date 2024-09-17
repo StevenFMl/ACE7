@@ -15,6 +15,8 @@ export class PasswordFormPage implements OnInit {
   submitAttempt: boolean = false;
   currentYear: number = new Date().getFullYear();
   token: string = '';
+  passwordType: string = 'password';  // Por defecto, las contraseñas están ocultas
+  confirmPasswordType: string = 'password';  // Por defecto, las contraseñas están ocultas
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -30,7 +32,7 @@ export class PasswordFormPage implements OnInit {
     if (!this.token) {
         this.router.navigate(['/login']);
     }
-}
+  }
 
   async resetPassword() {
     this.submitAttempt = true;
@@ -71,5 +73,15 @@ export class PasswordFormPage implements OnInit {
     } else {
       await this.toastService.presentToast('Error', 'Por favor ingrese contraseñas válidas y asegúrese de que coincidan.', 'top', 'danger', 2000);
     }
+  }
+
+  // Método para alternar la visibilidad de la contraseña
+  togglePasswordVisibility() {
+    this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+
+  // Método para alternar la visibilidad de la contraseña de confirmación
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordType = this.confirmPasswordType === 'password' ? 'text' : 'password';
   }
 }

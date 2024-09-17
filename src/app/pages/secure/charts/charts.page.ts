@@ -410,6 +410,7 @@ export class ChartsPage implements OnInit {
         this.mostrarMensajeRegistroExitoso();
         
         this.navCtrl.navigateRoot(['/listacostos']);
+        this.navCtrl.back
       } else {
         this.authService.showToast(res.mensaje);
       }
