@@ -16,44 +16,58 @@
   max-height: 800px;
   height: 100%;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .grid-item {
-  background-color: white;
+  background-color: var(--ion-color-light);
   border: 1px solid rgb(182, 182, 182);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.grid-item:hover {
+  transform: translateY(-5px);
 }
 
 .info-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  h3 {
-    margin: 0px;
-    font-size: 20px;
-    margin-left: 5px;
-  }
+  margin-bottom: 15px;
+  color: var(--ion-color-primary);
+}
+
+.info-card ion-icon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.info-card h3 {
+  font-size: 22px;
+  margin: 0;
 }
 
 .profits-card-result {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-top: 20px;
-  ion-icon {
-    font-size: 22px;
-        font-weight: normal;
-  }
-  p {
-    margin: 0px;
-    margin-left: 5px;
-    font-size: 30px;
-    font-weight: bold;
-  }
+}
 
+.profits-card-result ion-icon {
+  font-size: 30px;
+  margin-right: 10px;
+  color: var(--ion-color-secondary);
+}
+
+.profits-card-result p {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 .tabla-ventas {
@@ -68,7 +82,7 @@
 .tabla-ventas th,
 .tabla-ventas td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -94,23 +108,34 @@
 
 .pie-chart {
   margin-bottom: 25px;
-  overflow: auto
+  overflow: auto;
 }
 
-.custom-tooltip {
-  p {
-    margin: 0px;
-    font-size: 30px;
-  }
+.custom-tooltip p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .color-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  div {
-    width: 20px;
-    height: 20px;
-    border-radius: 100%;
-  }
 }
+
+.color-container div {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  margin: 5px;
+}
+
+.color-primary {
+  background-color: var(--ion-color-primary);
+}
+
+.color-secondary {
+  background-color: var(--ion-color-secondary);
+}
+
+

@@ -19,7 +19,23 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="ion-padding">
+ <!-- Mostrar las fechas del reporte en la parte superior -->
+ <div class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <div class="date-range">
+        <ion-item>
+          <ion-label>Desde:</ion-label>
+          <div class="date-value" style="margin-top: 5px;">{{ dateFrom }}</div> <!-- Valor debajo de "Desde" -->
+        </ion-item>
+        <ion-item>
+          <ion-label>Hasta:</ion-label>
+          <div class="date-value" style="margin-top: 5px;">{{ dateTo }}</div> <!-- Valor debajo de "Hasta" -->
+        </ion-item>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
     <div class="custom-grid">
       <div class="grid-item" style="display: flex; flex-direction: column; align-items: center;">
         <div class="info-card" style="color: #269726; text-align: center;">
@@ -44,7 +60,6 @@
         </div>
       </div>
     </div>
-
 
     <!-- Gráfico Circular -->
     <div class="grid-item" style="margin-bottom: 20px; display: flex; flex-direction: column; align-items: center;">
